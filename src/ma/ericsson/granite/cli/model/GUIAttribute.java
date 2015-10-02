@@ -65,7 +65,7 @@ public class GUIAttribute {
 			str = str.replaceFirst(" +(.)", matcher.group(1).toUpperCase());
 	    }
 	    
-		return str.replaceAll("é", "e").replaceAll("è", "e").replaceAll("'", "").replaceAll("\\.", "_").replaceAll(" ", "");
+		return str.replaceAll("é", "e").replaceAll("è", "e").replaceAll("'", "").replaceAll("\\.", "_").replaceAll("/", "_");
 	}
 
 	public String getFormFieldName() {
