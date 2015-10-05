@@ -56,16 +56,23 @@ public class GUIAttribute {
 	}
 
 	public String getAttributeName() {
-		
+
 		String str = mapping.substring(mapping.indexOf('.') + 1);
-		
+
 		Matcher matcher = Pattern.compile(" +(.)").matcher(str);
-	    
+
 		while (matcher.find()) {
 			str = str.replaceFirst(" +(.)", matcher.group(1).toUpperCase());
-	    }
-	    
-		return str.replaceAll("é", "e").replaceAll("è", "e").replaceAll("'", "").replaceAll("\\.", "_").replaceAll(" ", "");
+		}
+
+		str = str.replaceAll("é", "e")//
+				.replaceAll("è", "e")//
+				.replaceAll("\\(", "")//
+				.replaceAll("\\)", "")//
+				.replaceAll("'", "")//
+				.replaceAll("\\.", "_")//
+				.replaceAll("/", "_");
+		return str;
 	}
 
 	public String getFormFieldName() {
