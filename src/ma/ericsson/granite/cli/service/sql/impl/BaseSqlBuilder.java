@@ -16,18 +16,27 @@ public abstract class BaseSqlBuilder {
 	private ApplicationContext applicationContext;
 
 	protected List<String> output;
+	protected List<String> outputDelete;
+	protected List<String> outputViewCReation;
 
-	public List<String> build(GUI gui) {
-		
+	
+	public List<List<String>> build(GUI gui) {
+		List<List<String>> result = new ArrayList<List<String>>();
 		output = new ArrayList<String>();
-
+		outputDelete = new ArrayList<String>();
+		outputViewCReation = new ArrayList<String>();
+		
 		setQueries(gui);
 
 		output.add(SQL_BLANK_LINE);
 		output.add(SQL_BLANK_LINE);
 		output.add(SQL_BLANK_LINE);
 
-		return output;
+		result.add(output);
+		result.add(outputDelete);
+		result.add(outputViewCReation);
+		
+		return result;
 	}
 
 	public abstract void setQueries(GUI gui);

@@ -44,11 +44,8 @@ public class Launcher {
 		Map<String, List<String>> output;
 
 		try {
-			
 			FileInputStream in = new FileInputStream(file);
 			guis = parser.parseGUIs(in);
-
-			output = builder.build(guis);
 
 			for (GUI gui : guis) {
 				try {
@@ -60,16 +57,43 @@ public class Launcher {
 				}
 			}
 
+			output = builder.build(guis);
+			
 			PrintWriter writer;
 			for (String key : output.keySet()) {
-				writer = new PrintWriter("guis/gui_" + key + ".sql");
+				if (key.contains("Delete")) {
+					writer = new PrintWriter("guis/gui_" + key + ".sql");
+					
+					for (int i = 0; i < output.get(key).size(); i++) {
+						writer.write(output.get(key).get(i));
+					}
 
-				for (int i = 0; i < output.get(key).size(); i++) {
-					writer.write(output.get(key).get(i));
+					writer.flush();
+					writer.close();
+
 				}
+				else if (key.contains("GraniteView")) {
+					writer = new PrintWriter("guis/gui_" + key + ".sql");
+					
+					for (int i = 0; i < output.get(key).size(); i++) {
+						writer.write(output.get(key).get(i));
+					}
 
-				writer.flush();
-				writer.close();
+					writer.flush();
+					writer.close();
+
+				}
+				else {
+					writer = new PrintWriter("guis/gui_" + key + ".sql");
+					
+					for (int i = 0; i < output.get(key).size(); i++) {
+						writer.write(output.get(key).get(i));
+					}
+
+					writer.flush();
+					writer.close();
+
+				}
 			}
 
 		} catch (GUIParserInputException e) {

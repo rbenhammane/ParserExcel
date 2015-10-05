@@ -36,16 +36,30 @@ public class SqlGUIBuilder implements GUIBuilder<List<GUI>, Map<String, List<Str
 		for (GUI gui : guis) {
 			
 			List<String> queries = new ArrayList<String>();
-			
+			List<String> queriesDelete = new ArrayList<String>();
+			List<String> queriesGraniteViewCR = new ArrayList<String>();
+			System.out.println("Builders "+builders.size());
 			for (BaseSqlBuilder builder : builders) {
-				queries.addAll(builder.build(gui));
+				queries.addAll(builder.build(gui).get(0));
+				queriesDelete.addAll(builder.build(gui).get(1));
+				queriesGraniteViewCR.addAll(builder.build(gui).get(2));
 			}
 
 			queries.add(SQL_COMMIT);
 			queries.add(SQL_BLANK_LINE);
 			queries.add(SQL_QUIT);
 			
+			queriesDelete.add(SQL_COMMIT);
+			queriesDelete.add(SQL_BLANK_LINE);
+			queriesDelete.add(SQL_QUIT);
+			
+			queriesGraniteViewCR.add(SQL_COMMIT);
+			queriesGraniteViewCR.add(SQL_BLANK_LINE);
+			queriesGraniteViewCR.add(SQL_QUIT);
+			
 			queriesMap.put(gui.getName(), queries);
+			queriesMap.put(gui.getName() + "Delete", queriesDelete);
+			queriesMap.put(gui.getName() + "GraniteView", queriesGraniteViewCR);
 		}
 
 		return queriesMap;
