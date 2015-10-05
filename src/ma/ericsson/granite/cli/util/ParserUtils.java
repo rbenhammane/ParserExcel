@@ -36,7 +36,7 @@ public class ParserUtils {
 	public static String generateSicQuery(String sic, String sic_value) {
 		String q = "INSERT INTO \"EAT\".\"I_DICTIONARY\" (ID, SIC, LANG_ID, MESSAGE, DOMAIN) VALUES ("
 				+ "(select max(ID) from \"EAT\".\"I_DICTIONARY\")+1,"
-				+ "'"+sic+"','"+SIC_EN+"','"+sic_value+"', '"+DOMAIN+"');";
+				+ "'"+sic+"','"+SIC_EN+"','"+sic_value.replaceAll("'", "''")+"', '"+DOMAIN+"');";
 		
 		return q;
 	}

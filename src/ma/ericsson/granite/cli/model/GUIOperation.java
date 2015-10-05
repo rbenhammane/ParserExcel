@@ -1,7 +1,9 @@
 package ma.ericsson.granite.cli.model;
 
+import ma.ericsson.utils.Utils;
+
 public class GUIOperation {
-	
+
 	private String name;
 	private String comment;
 
@@ -19,6 +21,10 @@ public class GUIOperation {
 
 	public void setComment(String comment) {
 		this.comment = comment;
+	}
+
+	public String getSicName() {
+		return Utils.clean(name, "");
 	}
 
 }

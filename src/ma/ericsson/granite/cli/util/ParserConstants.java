@@ -24,6 +24,7 @@ public class ParserConstants {
 	public static final String SIC_EN = "EN";
 	public static final String MENU_SIC_PREFIX = "menu.inwi.";
 	public static final String FIELD_FORM_SIC_PREFIX = "field.form.inwi.";
+	public static final String BUTTON_FORM_SIC_PREFIX = "button.form.inwi.";
 	public static final String FIELD_DATAGRID_SIC_PREFIX = "field.datagrid.inwi.";
 	public static final String DATAGRID_SIC_PREFIX = "datagrid.inwi.";
 	public static final String FORM_SIC_PREFIX = "form.inwi.";

@@ -2,8 +2,8 @@ package ma.ericsson.granite.cli.service.sql.impl;
 
 import static ma.ericsson.granite.cli.util.ParserConstants.*;
 import ma.ericsson.granite.cli.model.GUI;
-import ma.ericsson.granite.cli.model.GUIAttribute;
 import ma.ericsson.granite.cli.model.GUIOperation;
+import ma.ericsson.granite.cli.util.ParserUtils;
 
 public class SqlFormButtonBuilder extends BaseSqlBuilder {
 
@@ -15,9 +15,7 @@ public class SqlFormButtonBuilder extends BaseSqlBuilder {
 		output.add(SQL_BLANK_LINE);
 
 		for (GUIOperation operation : gui.getOperations()) {
-			output.add("INSERT INTO \"EAT\".\"M_FORM_BUTTON\" (BUTTON_NAME, FORM_NAME, BUTTON_LABEL, ACTION, FORM_BIND, PRESENTATION_INDEX, BUTTON_SIC) VALUES ('"
-					+ operation.getName()
-					+ "', 'APDValidationRadio', 'Dowload APD', 'javascript:DowloadAPD()', 'N', '1', 'btn.inwi.sic.DowloadAPD');");
+			output.add(ParserUtils.generateSicQuery(BUTTON_FORM_SIC_PREFIX + gui.getFormName() + "." + operation.getSicName(), operation.getName()));
 			output.add(SQL_BLANK_LINE);
 		}
 

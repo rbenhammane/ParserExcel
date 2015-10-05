@@ -64,6 +64,8 @@ public class ExcelGUISheetParser extends BaseExcelSheetParser {
 					
 					operation.setComment(validator.getValue(sheet.getRow(i).getCell(topLeftCellCol + 7)));
 					
+					output.getOperations().add(operation);
+					
 				}
 			}
 		}
