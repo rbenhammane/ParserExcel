@@ -1,6 +1,7 @@
 package ma.ericsson.granite.cli;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -15,6 +16,9 @@ import ma.ericsson.granite.cli.exception.GUIParserInputException;
 import ma.ericsson.granite.cli.model.GUI;
 import ma.ericsson.granite.cli.service.GUIBuilder;
 import ma.ericsson.granite.cli.service.SRMSParser;
+import ma.ericsson.service.gen.SRMSJspGenerator;
+import ma.ericsson.service.gen.SRMSModelGenerator;
+import ma.ericsson.service.gen.SRMSServiceGenerator;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -28,29 +32,38 @@ public class Launcher {
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
 
-		String file = "Reda.xlsx";
+		String file = "SRMS_ScheduleAndEffort_v02_formatted.xlsx";
 
-		ApplicationContext context = new ClassPathXmlApplicationContext(
-				new String[] { "applicationResources.xml", "applicationContext.xml" });
+		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationResources.xml", "applicationContext.xml" });
 
 		SRMSParser<InputStream, List<GUI>> parser = (SRMSParser<InputStream, List<GUI>>) context.getBean("parser");
 
-		GUIBuilder<List<GUI>, Map<String, List<String>>> builder = 
-				(GUIBuilder<List<GUI>, Map<String, List<String>>>) context.getBean("builder");
+		GUIBuilder<List<GUI>, Map<String, List<String>>> builder = (GUIBuilder<List<GUI>, Map<String, List<String>>>) context.getBean("builder");
 
 		List<GUI> guis;
 		Map<String, List<String>> output;
 
 		try {
+			
 			FileInputStream in = new FileInputStream(file);
 			guis = parser.parseGUIs(in);
 
 			output = builder.build(guis);
 
+			for (GUI gui : guis) {
+				try {
+					SRMSJspGenerator.createJSP(gui);
+					SRMSModelGenerator.createClassModel(gui);
+					SRMSServiceGenerator.createClassService(gui);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+
 			PrintWriter writer;
 			for (String key : output.keySet()) {
 				writer = new PrintWriter("guis/gui_" + key + ".sql");
-	
+
 				for (int i = 0; i < output.get(key).size(); i++) {
 					writer.write(output.get(key).get(i));
 				}

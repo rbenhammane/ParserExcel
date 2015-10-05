@@ -2,22 +2,28 @@ package ma.ericsson.service.gen;
 
 import java.io.File;
 
+import ma.ericsson.granite.cli.model.GUI;
 import ma.ericsson.utils.Utils;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.jboss.forge.roaster.Roaster;
 import org.jboss.forge.roaster.model.source.JavaClassSource;
 import org.jboss.forge.roaster.model.source.MethodSource;
 
 public class SRMSServiceGenerator {
 
-	private final static String SOURCE_PATH = "D:\\workspace\\dev\\java\\workspaces\\eclipse_workspace_esioox\\EAT-Generator\\src-gen";
+	protected static final Log log = LogFactory.getLog(SRMSServiceGenerator.class);
 
-	public static void createClassService(String pkgName, String classeName) {
+	private final static String SOURCE_PATH = "../SRMS/src-gen-service/srms/acquisition/forms/";
+
+	private static void createClassService(String pkgName, String className) {
 
 		final JavaClassSource javaClass = Roaster.create(JavaClassSource.class);
-		javaClass.setPackage(pkgName).setName(classeName);
+		javaClass.setPackage(pkgName).setName(className);
 
 		javaClass.setSuperType("srms.services.GraniteFormService");
+		javaClass.addImport("org.slf4j.LoggerFactory");
 
 		/*************/
 		/*************/
@@ -25,7 +31,7 @@ public class SRMSServiceGenerator {
 		MethodSource methodDoAction = javaClass.addMethod() //
 				.setPublic() //
 				.setName("doAction") //
-				.setBody(String.format("", classeName, classeName));
+				.setBody(String.format("", className, className));
 		methodDoAction.addParameter(String.class, "command");
 		methodDoAction.addParameter("javax.servlet.http.HttpServletRequest", "request");
 		methodDoAction.addParameter("javax.servlet.http.HttpServletResponse", "response");
@@ -37,7 +43,7 @@ public class SRMSServiceGenerator {
 		MethodSource methodAfterLoad = javaClass.addMethod() //
 				.setPublic() //
 				.setName("afterLoad") //
-				.setBody(String.format("", classeName, classeName));
+				.setBody(String.format("", className, className));
 		methodAfterLoad.addParameter("javax.servlet.http.HttpServletRequest", "request");
 		methodAfterLoad.addParameter("java.util.HashMap<String, Object>", "map");
 		methodAfterLoad.addAnnotation(Override.class);
@@ -55,7 +61,7 @@ public class SRMSServiceGenerator {
 				.setType("org.slf4j.Logger")//
 				.setPrivate()//
 				.setStatic(true)//
-				.setFinal(true).setStringInitializer("LoggerFactory.getLogger(" + classeName + ".class.getName())");
+				.setFinal(true).setLiteralInitializer("LoggerFactory.getLogger(" + className + ".class.getName())");
 
 		// FieldSource<JavaClassSource> loggerProperty = javaClass.addField("log")//
 		// .setType("org.slf4j.Logger")//
@@ -65,14 +71,19 @@ public class SRMSServiceGenerator {
 		/********************/
 		/** PRINT CODE SRC **/
 		/********************/
-		System.out.println(javaClass);
-		Utils.setFileContent(new File(SOURCE_PATH + "/" + classeName + ".java"), javaClass.toString());
+		// System.out.println(javaClass);
+		Utils.setFileContent(new File(SOURCE_PATH + "/" + className + ".java"), javaClass.toString());
+		System.out.println(className + ".java generated !");
 
 	}
 
 	public static void main(String[] args) {
-		createClassService("srms.acquisition.forms.apd", "ValidateApdRadioFormService");
+		createClassService("srms.acquisition.forms.apd ", "ValidateApdRadioFormService");
 
+	}
+
+	public static void createClassService(GUI gui) {
+		createClassService("srms.acquisition.forms", gui.getFormManagerClass() + "FormService");
 	}
 
 }
