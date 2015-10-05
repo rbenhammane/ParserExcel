@@ -75,7 +75,6 @@ public class SqlDataGridFieldBuilder extends BaseSqlBuilder {
 		// view creation
 		outputViewCReation = ParserUtils.createGraniteView(attrs, gui);
 
-		//JPA Model Generation
-		SRMSModelGenerator.createClassModel(JPA_PACKAGE, gui.getJpaModelName(), jpaAttr);
+		
 	}
 }

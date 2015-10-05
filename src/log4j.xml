@@ -6,7 +6,7 @@
     <appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern"
-                value="%p [%t] %c{1}.%M(%L) | %m%n"/>
+                value="%d{dd.MM.yyyy HH:mm:ss,SSS} *%-5p* %c{1}: %m (%F, line %L)%n"/>
         </layout>
     </appender>
 
@@ -18,16 +18,13 @@
         <level value="WARN"/>
     </logger>
    
-    <logger name="com.bull.mc.catalog">
+    <logger name="ma.ericsson">
         <level value="DEBUG"/>
     </logger>
 
-    <logger name="com.bull.mc.catalog.tool">
-        <level value="INFO"/>
-    </logger>
 
     <root>
-        <level value="WARN"/>
+        <level value="DEBUG"/>
         <appender-ref ref="CONSOLE"/>
     </root>
 

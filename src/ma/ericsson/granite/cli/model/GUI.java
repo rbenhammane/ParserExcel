@@ -37,12 +37,12 @@ public class GUI {
 	}
 
 	public List<GUIAttribute> getAttributes() {
-		if (attributes.isEmpty()) {
-			GUIAttribute guiAttribute = new GUIAttribute();
-			guiAttribute.setName("rownum");
-			guiAttribute.setDataType("long");
-			attributes.add(guiAttribute);
-		}
+//		if (attributes.isEmpty()) {
+//			GUIAttribute guiAttribute = new GUIAttribute();
+//			guiAttribute.setName("rownum");
+//			guiAttribute.setDataType("long");
+//			attributes.add(guiAttribute);
+//		}
 		return attributes;
 	}
 

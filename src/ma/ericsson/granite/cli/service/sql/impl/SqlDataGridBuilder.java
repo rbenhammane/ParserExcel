@@ -63,7 +63,5 @@ public class SqlDataGridBuilder extends BaseSqlBuilder {
 			e.printStackTrace();
 		}
 		
-		//Service Creation
-		SRMSServiceGenerator.createClassService(SERVICE_PACKAGE_INWI, gui.getServiceName());
 	}
 }
