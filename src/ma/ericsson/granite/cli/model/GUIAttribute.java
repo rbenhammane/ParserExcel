@@ -3,6 +3,8 @@ package ma.ericsson.granite.cli.model;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import ma.ericsson.utils.Utils;
+
 public class GUIAttribute {
 
 	private String name;
@@ -56,26 +58,30 @@ public class GUIAttribute {
 	}
 
 	public String getAttributeName() {
-
-		String str = mapping.substring(mapping.indexOf('.') + 1);
-
-		Matcher matcher = Pattern.compile(" +(.)").matcher(str);
-
-		while (matcher.find()) {
-			str = str.replaceFirst(" +(.)", matcher.group(1).toUpperCase());
-		}
-
-		str = str.replaceAll("é", "e")//
-				.replaceAll("è", "e")//
-				.replaceAll("\\(", "")//
-				.replaceAll("\\)", "")//
-				.replaceAll("'", "")//
-				.replaceAll("\\.", "_")//
-				.replaceAll("/", "_");
-		return str;
+		return Utils.clean(mapping, "");
+		// String str = mapping.substring(mapping.indexOf('.') + 1);
+		//
+		// Matcher matcher = Pattern.compile(" +(.)").matcher(str);
+		//
+		// while (matcher.find()) {
+		// str = str.replaceFirst(" +(.)", matcher.group(1).toUpperCase());
+		// }
+		//
+		// str = str.replaceAll("é", "e")//
+		// .replaceAll("è", "e")//
+		// .replaceAll("\\(", "")//
+		// .replaceAll("\\)", "")//
+		// .replaceAll("'", "")//
+		// .replaceAll("\\.", "_")//
+		// .replaceAll("/", "_");
+		// return str;
 	}
 
 	public String getFormFieldName() {
 		return mapping.substring(name.indexOf('.') + 1);
+	}
+
+	public String getColumnName() {
+		return Utils.clean(mapping, "_");
 	}
 }

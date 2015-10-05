@@ -39,9 +39,9 @@ public class SRMSModelGenerator {
 		Map<String, String> mapNameType;
 
 		final JavaClassSource javaClass = Roaster.create(JavaClassSource.class);
-		classeName = StringUtils.capitalize(classeName.toLowerCase());
+		// classeName = StringUtils.capitalize(classeName.toLowerCase());
 		javaClass.setPackage(PKG_NAME).setName(classeName);
-		 javaClass.addImport(java.util.Date.class);
+		javaClass.addImport(java.util.Date.class);
 
 		/*************/
 		/** LONG ID **/
@@ -64,12 +64,12 @@ public class SRMSModelGenerator {
 			// for (String attrName : mapNameType.keySet()) {
 			String attrName = attr.getAttributeName();
 			String attrType = attr.getDataType().toLowerCase();
-			
+
 			// TODO in GUI.java side
 			attrType = StringUtils.capitalize(attrType);
 			attrName = StringUtils.uncapitalize(attrName);
-			
-			if(attrType.equals("Picklist")){
+
+			if (attrType.equals("Picklist")) {
 				attrType = "String";
 			}
 
@@ -83,7 +83,7 @@ public class SRMSModelGenerator {
 				annotation.setEnumValue(TemporalType.DATE);
 			}
 			AnnotationSource annotation = field.addAnnotation(Column.class);
-			annotation.setLiteralValue("name", "\"" + attrName.toUpperCase() + "\"");
+			annotation.setLiteralValue("name", "\"" + attr.getColumnName() + "\"");
 
 		}
 
@@ -97,7 +97,7 @@ public class SRMSModelGenerator {
 		// jsonSerialize.setLiteralValue("using", "GenericJsonSerializer.class");
 
 		AnnotationSource annotationTable = javaClass.addAnnotation(Table.class);
-		annotationTable.setStringValue("name", classeName.toUpperCase() + " TODO");
+		annotationTable.setStringValue("name", gui.getGraniteViewName());
 
 		// AnnotationSource annotationNamedQuery = javaClass.addAnnotation(NamedQuery.class);
 		// annotationNamedQuery.setStringValue("name", "TODO");

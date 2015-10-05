@@ -46,13 +46,13 @@ public class Utils {
 		return content;
 	}
 
-	public static String toJavaAttribute(String inStr) {
+	public static String clean(String inStr, String sep) {
 		String outStr = inStr.substring(inStr.indexOf('.') + 1);
 
 		Matcher matcher = Pattern.compile(" +(.)").matcher(outStr);
 
 		while (matcher.find()) {
-			outStr = outStr.replaceFirst(" +(.)", matcher.group(1).toUpperCase());
+			outStr = outStr.replaceFirst(" +(.)", sep + matcher.group(1).toUpperCase());
 		}
 
 		outStr = outStr.replaceAll("é", "e")//

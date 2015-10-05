@@ -19,7 +19,7 @@ public class SRMSJspGenerator {
 	private final static String MODEL_JSP = "./grid_with_filter_template.jsp";
 
 	public static void createJSP(GUI gui) throws IOException {
-		String jspFileName = gui.getJSPName() + ".jsp";
+		String jspFileName = gui.getJSPName();
 		
 		
 
