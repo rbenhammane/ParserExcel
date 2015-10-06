@@ -43,7 +43,7 @@ public class ParserUtils {
 	
 	public static List<String> createGraniteView(List<String> attrs, GUI gui) {
 		List<String> outputViewCReation = new ArrayList<String>();
-		outputViewCReation.add("CREATE OR REPLACE FORCE VIEW \"INSTALL\".\""+gui.getGraniteViewName()+"\" ( ");
+		outputViewCReation.add("CREATE OR REPLACE FORCE VIEW \"INSTALL\".\""+gui.getGraniteViewName()+"\" (\"ROW_NUM\", ");
 		outputViewCReation.add(ParserConstants.SQL_BLANK_LINE);
 		String select = "";
 		for (String attr : attrs) {
@@ -56,18 +56,20 @@ public class ParserUtils {
 			select = select + "'"+attr+"',";
 		}
 		select = select.substring(0, select.length()-1);
-		select = "SELECT " + select + " FROM DUAL";
+
 		outputViewCReation.add(") as ");
 		outputViewCReation.add(ParserConstants.SQL_BLANK_LINE);
-		outputViewCReation.add(select);
+		outputViewCReation.add("SELECT 1," + select + " FROM DUAL");
 		outputViewCReation.add(ParserConstants.SQL_BLANK_LINE);
 		outputViewCReation.add("UNION");
 		outputViewCReation.add(ParserConstants.SQL_BLANK_LINE);
-		outputViewCReation.add(select);
+		outputViewCReation.add("SELECT 2," + select + " FROM DUAL");
 		outputViewCReation.add(ParserConstants.SQL_BLANK_LINE);
 		outputViewCReation.add("UNION");
 		outputViewCReation.add(ParserConstants.SQL_BLANK_LINE);
-		outputViewCReation.add(select);
+		outputViewCReation.add("SELECT 3," + select + " FROM DUAL;");
+		outputViewCReation.add(ParserConstants.SQL_BLANK_LINE);
+		outputViewCReation.add(ParserConstants.SQL_BLANK_LINE);
 		return outputViewCReation;
 	}
 }

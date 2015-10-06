@@ -32,7 +32,7 @@ public class SqlDataGridFieldBuilder extends BaseSqlBuilder {
 			output.add("INSERT INTO \"EAT\".\"M_DATAGRID_FIELD\" (DATAGRID_NAME, FIELD_NAME, FIELD_TYPE, FIELD_CAPTION, FIELD_SIC, PRIVILEGE, VISIBLE, PRESENTATION_INDEX, PK, DEFAULT_WIDTH, DOMAIN, SORTABLE, FILTERABLE) VALUES ('"
 					+ gui.getGridName()
 					+ "', '"
-					+ attribute.getAttributeName()
+					+ attribute.getColumnName().toUpperCase()
 					+ "', '"
 					+ "0', '"
 					+ attribute.getName().replaceAll("'", "''").replaceAll(" ", "_")
@@ -44,9 +44,9 @@ public class SqlDataGridFieldBuilder extends BaseSqlBuilder {
 			
 			sics.put(FIELD_DATAGRID_SIC_PREFIX + attribute.getAttributeName(), attribute.getName().replaceAll("'", "''"));
 			/** Delete script */
-			outputDelete.add("DELETE FROM \"EAT\".\"M_DATAGRID_FIELD\" WHERE FIELD_NAME = '"+attribute.getAttributeName()+"';");
+			outputDelete.add("DELETE FROM \"EAT\".\"M_DATAGRID_FIELD\" WHERE FIELD_NAME = '"+attribute.getColumnName().toUpperCase()+"' AND DATAGRID_NAME = '"+gui.getGridName()+"';");
 			outputDelete.add(SQL_BLANK_LINE);
-			attrs.add(attribute.getAttributeName());
+			attrs.add(attribute.getColumnName().toUpperCase());
 			
 			jpaAttr.put(attribute.getAttributeName(), "String");
 		}

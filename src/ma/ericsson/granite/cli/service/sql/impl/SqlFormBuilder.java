@@ -28,7 +28,7 @@ public class SqlFormBuilder extends BaseSqlBuilder {
 				+ ENTITY_MANAGER
 				+ "', 'srms.acquisition.forms.inwi."
 				+ gui.getFormModelClass()
-				+ "', 'rownum', '" + DOMAIN + "', '2');");
+				+ "', 'ROW_NUM', '" + DOMAIN + "', '2');");
 
 		/** Delete script */
 //		outputDelete.add("DELETE FROM \"EAT\".\"M_FORM\" WHERE FORM_NAME = '"+gui.getFormName()+"';");

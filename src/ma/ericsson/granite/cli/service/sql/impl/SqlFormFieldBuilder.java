@@ -22,6 +22,12 @@ public class SqlFormFieldBuilder extends BaseSqlBuilder {
 		
 		outputDelete.add("-- Delete Form FIELD");
 		outputDelete.add(SQL_BLANK_LINE);
+		
+		output.add("INSERT INTO \"EAT\".\"M_FORM_FIELD\" (FORM_NAME, FIELD_NAME, FIELD_SIC, PK, MANDATORY, FIELD_TYPE, FORM_FIELD_TYPE, MIN_LENGTH, MAX_LENGTH, VISIBLE) VALUES ('"
+				+ gui.getFormName()
+				+ "', 'ROW_NUM', 'field.empty', 'Y', 'N', '10', '0', '0', '0', 'Y');");
+		outputDelete.add("DELETE FROM \"EAT\".\"M_FORM_FIELD\" WHERE FIELD_NAME = 'ROW_NUM' AND FORM_NAME = '" + gui.getFormName() + "';");
+		outputDelete.add(SQL_BLANK_LINE);
 
 		for (GUIAttribute attribute : gui.getAttributes()) {
 			output.add("INSERT INTO \"EAT\".\"M_FORM_FIELD\" (FORM_NAME, FIELD_NAME, FIELD_DESCRIPTION, FIELD_CAPTION, FIELD_SIC, MANDATORY, FIELD_TYPE, FORM_FIELD_TYPE, MIN_LENGTH, MAX_LENGTH, VISIBLE) VALUES ('"
@@ -39,7 +45,7 @@ public class SqlFormFieldBuilder extends BaseSqlBuilder {
 			sics.put(FIELD_FORM_SIC_PREFIX + attribute.getAttributeName(), attribute.getName().replaceAll("'", "''"));
 			
 			/** Delete script */
-			outputDelete.add("DELETE FROM \"EAT\".\"M_FORM_FIELD\" WHERE FIELD_NAME = '"+attribute.getAttributeName()+"';");
+			outputDelete.add("DELETE FROM \"EAT\".\"M_FORM_FIELD\" WHERE FIELD_NAME = '"+attribute.getAttributeName()+"' AND FORM_NAME = '" + gui.getFormName() + "';");
 			outputDelete.add(SQL_BLANK_LINE);
 		}
 		//Form Delete
