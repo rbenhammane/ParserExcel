@@ -25,10 +25,11 @@ public class SRMSJspGenerator {
 
 		String jspContent = Utils.getFileContent(MODEL_JSP);
 		jspContent = jspContent.replace("{**DATAGRID-NAME**}", gui.getName());
-		jspContent = jspContent.replace("{**FILTERFORM-NAME**}", gui.getName());
+		jspContent = jspContent.replace("{**FILTERFORM-NAME**}", gui.getFormName());
 		jspContent = jspContent.replace("{**TITLE**}", gui.getName());
 		jspContent = jspContent.replace("{**FILTER_HEIGHT**}", FILTER_HEIGHT);
-		jspContent = jspContent.replace("datagridId", gui.getName());
+		jspContent = jspContent.replace("datagridId", gui.getGridName());
+		jspContent = jspContent.replace("formId", gui.getFormName());
 		Utils.setFileContent(new File(MODEL_JSP_PATH + "/" + jspFileName), jspContent);
 		System.out.println(jspFileName + " generated !");
 

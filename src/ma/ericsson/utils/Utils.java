@@ -59,6 +59,7 @@ public class Utils {
 				.replaceAll("è", "e")//
 				.replaceAll("\\(", "")//
 				.replaceAll("\\)", "")//
+				.replaceAll("-", "_")//
 				.replaceAll("'", "")//
 				.replaceAll("\\.", "_")//
 				.replaceAll("/", "_");

@@ -27,4 +27,8 @@ public class GUIOperation {
 		return Utils.clean(name, "");
 	}
 
+	public String getOperationName() {
+		return Utils.clean(name.toLowerCase(), "");
+	}
+
 }

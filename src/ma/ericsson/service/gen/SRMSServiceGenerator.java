@@ -1,8 +1,10 @@
 package ma.ericsson.service.gen;
 
 import java.io.File;
+import java.util.List;
 
 import ma.ericsson.granite.cli.model.GUI;
+import ma.ericsson.granite.cli.model.GUIOperation;
 import ma.ericsson.utils.Utils;
 
 import org.apache.commons.logging.Log;
@@ -17,13 +19,18 @@ public class SRMSServiceGenerator {
 
 	private final static String SOURCE_PATH = "../SRMS/src-gen-service/srms/acquisition/forms/";
 
-	private static void createClassService(String pkgName, String className) {
+	public static void createClassService(GUI gui) {
+
+		String pkgName = "srms.acquisition.forms";
+		String className = gui.getFormManagerClass() + "FormService";
 
 		final JavaClassSource javaClass = Roaster.create(JavaClassSource.class);
 		javaClass.setPackage(pkgName).setName(className);
 
 		javaClass.setSuperType("srms.services.GraniteFormService");
 		javaClass.addImport("org.slf4j.LoggerFactory");
+		javaClass.addImport("srms.util.UtilsGraniteService");
+		javaClass.addImport(java.lang.reflect.Method.class);
 
 		/*************/
 		/*************/
@@ -31,7 +38,7 @@ public class SRMSServiceGenerator {
 		MethodSource methodDoAction = javaClass.addMethod() //
 				.setPublic() //
 				.setName("doAction") //
-				.setBody(String.format("", className, className));
+				.setBody(String.format("UtilsGraniteService.exec(this, command, request, response);"));
 		methodDoAction.addParameter(String.class, "command");
 		methodDoAction.addParameter("javax.servlet.http.HttpServletRequest", "request");
 		methodDoAction.addParameter("javax.servlet.http.HttpServletResponse", "response");
@@ -51,17 +58,28 @@ public class SRMSServiceGenerator {
 		/********************/
 		/***** LOGGER *******/
 		/********************/
-		// PropertySource<JavaClassSource> loggerProperty =
-		// javaClass.addProperty("org.slf4j.Logger","log");
-		// loggerProperty.setStringInitializer("LoggerFactory.getLogger(" + classeName + ".class.getName())");
-
-		// javaClass.addInterface(Serializable.class);
 		javaClass.addField()//
 				.setName("log")//
 				.setType("org.slf4j.Logger")//
 				.setPrivate()//
 				.setStatic(true)//
 				.setFinal(true).setLiteralInitializer("LoggerFactory.getLogger(" + className + ".class.getName())");
+
+		/********************/
+		/***** OPERATION ******/
+		/********************/
+		List<GUIOperation> operations = gui.getOperations();
+		for (GUIOperation operation : operations) {
+			String opName = operation.getOperationName();
+
+			MethodSource methodAction = javaClass.addMethod() //
+					.setPublic() //
+					.setName(opName) //
+					.setBody(String.format("// TODO"));
+			methodAction.addParameter("javax.servlet.http.HttpServletRequest", "request");
+			methodAction.addParameter("javax.servlet.http.HttpServletResponse", "response");
+
+		}
 
 		// FieldSource<JavaClassSource> loggerProperty = javaClass.addField("log")//
 		// .setType("org.slf4j.Logger")//
@@ -78,12 +96,8 @@ public class SRMSServiceGenerator {
 	}
 
 	public static void main(String[] args) {
-		createClassService("srms.acquisition.forms.apd ", "ValidateApdRadioFormService");
+		// createClassService("srms.acquisition.forms.apd ", "ValidateApdRadioFormService");
 
-	}
-
-	public static void createClassService(GUI gui) {
-		createClassService("srms.acquisition.forms", gui.getFormManagerClass() + "FormService");
 	}
 
 }

@@ -64,7 +64,8 @@ public class GUI {
 	}
 
 	public String getFormName() {
-		return name.replace(" ", "");
+		// return name.replace(" ", "");
+		return StringUtils.capitalize(Utils.clean(name,""));
 	}
 
 	public String getFormManagerClass() {
@@ -76,7 +77,8 @@ public class GUI {
 	}
 
 	public String getGridName() {
-		return name.replace(" ", "");
+		// return name.replace(" ", "");
+		return StringUtils.capitalize(Utils.clean(name,""));
 	}
 
 	public String getJSPName() {

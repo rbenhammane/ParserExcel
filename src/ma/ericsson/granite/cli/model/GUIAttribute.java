@@ -58,7 +58,7 @@ public class GUIAttribute {
 	}
 
 	public String getAttributeName() {
-		return Utils.clean(mapping, "");
+		return Utils.clean(mapping.toLowerCase(), "");
 		// String str = mapping.substring(mapping.indexOf('.') + 1);
 		//
 		// Matcher matcher = Pattern.compile(" +(.)").matcher(str);

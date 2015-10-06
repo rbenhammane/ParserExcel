@@ -11,17 +11,19 @@
     <script>  
 
     <exttaglib:datagrid gridName="{**DATAGRID-NAME**}" xtype="datagrid_xtype"  filter="true" filterForm="{**FILTERFORM-NAME**}" forceFit="true"  mandatoryFilters="false" rowLimit="false"/>
-    <exttaglib:filter formName="{**FILTERFORM-NAME**}" xtype="filter_xtype" gridId="datagridId"/>
-
-    var _filter = {region:'north', id:'filterId',xtype:'filter_xtype', height:{**FILTER_HEIGHT**}, collapsible:true, title:'{**TITLE**}'};
+    <!-- exttaglib:filter formName="{**FILTERFORM-NAME**}" xtype="filter_xtype" gridId="datagridId"/ -->
+	<exttaglib:form formName="formId" xtype="form_det_a_xtype" action="view" pk="0" />
+	
+    // var _filter = {region:'north', id:'filterId',xtype:'filter_xtype', height:{**FILTER_HEIGHT**}, collapsible:true, title:'{**TITLE**}'};
 	var _dataGrid = {region:'center', id:'datagridId', xtype:'datagrid_xtype'};
+	var _form = {region:'center', id:'formId', xtype:'form_det_a_xtype'};
     
     Ext.onReady(function(){
         
         new Ext.Viewport({
 			layout: 'border',
 			plain:true,
-            items : [_filter, _dataGrid],                   
+            items : [_form,_dataGrid],                   
             renderTo : Ext.getBody()
         });   
 
