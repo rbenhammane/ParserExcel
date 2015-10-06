@@ -10,7 +10,7 @@ public class ParserConstants {
 	public static final String DATASOURCE_GRANITEDS = "GRANITEDS";
 	public static final String DATASOURCE_QRTZDS = "QRTZDS";
 	public static final String MENU_ID = "106";
-	public static final String JSP_FOLDER = "/apps/inwi/";
+	public static final String JSP_FOLDER = "/apps/srms/inwi/";
 	public static final String JPA_PACKAGE = "model";
 	public static final String JPA_PACKAGE_ACQUISITION = "model.acquisition";
 	public static final String SERVICE_PACKAGE_INWI = "srms.acquisition.forms.inwi";
