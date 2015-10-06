@@ -17,7 +17,7 @@ public class SRMSServiceGenerator {
 
 	protected static final Log log = LogFactory.getLog(SRMSServiceGenerator.class);
 
-	private final static String SOURCE_PATH = "../SRMS/src-gen-service/srms/acquisition/forms/";
+	private final static String SOURCE_PATH = "../SRMS/src-gen-service/srms/acquisition/forms/inwi/";
 
 	public static void createClassService(GUI gui) {
 
@@ -97,7 +97,6 @@ public class SRMSServiceGenerator {
 
 	public static void main(String[] args) {
 		// createClassService("srms.acquisition.forms.apd ", "ValidateApdRadioFormService");
-
 	}
 
 }
