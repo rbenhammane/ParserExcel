@@ -1,5 +1,7 @@
 package ma.ericsson.service.gen;
 
+import static ma.ericsson.granite.cli.util.ParserConstants.*;
+
 import java.io.File;
 import java.util.List;
 
@@ -21,11 +23,10 @@ public class SRMSServiceGenerator {
 
 	public static void createClassService(GUI gui) {
 
-		String pkgName = "srms.acquisition.forms";
 		String className = gui.getFormManagerClass() + "FormService";
 
 		final JavaClassSource javaClass = Roaster.create(JavaClassSource.class);
-		javaClass.setPackage(pkgName).setName(className);
+		javaClass.setPackage(SERVICE_PACKAGE_INWI).setName(className);
 
 		javaClass.setSuperType("srms.services.GraniteFormService");
 		javaClass.addImport("org.slf4j.LoggerFactory");

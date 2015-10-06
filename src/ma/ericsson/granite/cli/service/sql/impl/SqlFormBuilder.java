@@ -26,7 +26,7 @@ public class SqlFormBuilder extends BaseSqlBuilder {
 				+ gui.getFormManagerClass()
 				+ "FormService', '"
 				+ ENTITY_MANAGER
-				+ "', 'model."
+				+ "', 'srms.acquisition.forms.inwi."
 				+ gui.getFormModelClass()
 				+ "', 'rownum', '" + DOMAIN + "', '2');");
 
