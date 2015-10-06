@@ -15,7 +15,7 @@ public class SRMSServiceGenerator {
 
 	protected static final Log log = LogFactory.getLog(SRMSServiceGenerator.class);
 
-	private final static String SOURCE_PATH = "../SRMS/src-gen-service/srms/acquisition/forms/";
+	private final static String SOURCE_PATH = "../SRMS/src-gen-service/srms/acquisition/forms/inwi/";
 
 	private static void createClassService(String pkgName, String className) {
 
@@ -83,7 +83,7 @@ public class SRMSServiceGenerator {
 	}
 
 	public static void createClassService(GUI gui) {
-		createClassService("srms.acquisition.forms", gui.getFormManagerClass() + "FormService");
+		createClassService("srms.acquisition.forms.inwi", gui.getFormManagerClass() + "FormService");
 	}
 
 }
