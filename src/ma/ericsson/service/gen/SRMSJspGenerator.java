@@ -24,7 +24,7 @@ public class SRMSJspGenerator {
 		
 
 		String jspContent = Utils.getFileContent(MODEL_JSP);
-		jspContent = jspContent.replace("{**DATAGRID-NAME**}", gui.getName());
+		jspContent = jspContent.replace("{**DATAGRID-NAME**}", gui.getGridName());
 		jspContent = jspContent.replace("{**FILTERFORM-NAME**}", gui.getFormName());
 		jspContent = jspContent.replace("{**TITLE**}", gui.getName());
 		jspContent = jspContent.replace("{**FILTER_HEIGHT**}", FILTER_HEIGHT);

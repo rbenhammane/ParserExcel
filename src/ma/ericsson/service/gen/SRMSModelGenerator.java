@@ -46,7 +46,7 @@ public class SRMSModelGenerator {
 		/*************/
 		/** LONG ID **/
 		/*************/
-		String id = "rownum";
+		String id = "ROW_NUM";
 		javaClass.addProperty(Long.class, id);
 		FieldSource fieldId = javaClass.getField(id);
 		fieldId.addAnnotation(Id.class);
@@ -83,7 +83,7 @@ public class SRMSModelGenerator {
 				annotation.setEnumValue(TemporalType.DATE);
 			}
 			AnnotationSource annotation = field.addAnnotation(Column.class);
-			annotation.setLiteralValue("name", "\"" + attr.getColumnName() + "\"");
+			annotation.setLiteralValue("name", "\"" + attr.getColumnName().toUpperCase() + "\"");
 
 		}
 

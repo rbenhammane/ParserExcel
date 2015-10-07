@@ -65,7 +65,7 @@ public class GUI {
 
 	public String getFormName() {
 		// return name.replace(" ", "");
-		return StringUtils.capitalize(Utils.clean(name,""));
+		return StringUtils.capitalize(Utils.clean(name,"")) + "Form";
 	}
 
 	public String getFormManagerClass() {

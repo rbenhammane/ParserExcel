@@ -16,7 +16,7 @@
 	
     // var _filter = {region:'north', id:'filterId',xtype:'filter_xtype', height:{**FILTER_HEIGHT**}, collapsible:true, title:'{**TITLE**}'};
 	var _dataGrid = {region:'center', id:'datagridId', xtype:'datagrid_xtype'};
-	var _form = {region:'center', id:'formId', xtype:'form_det_a_xtype'};
+	var _form = {region:'north', id:'formId', height:300, xtype:'form_det_a_xtype'};
     
     Ext.onReady(function(){
         
