@@ -18,7 +18,7 @@ public class SqlFormBuilder extends BaseSqlBuilder {
 		output.add(SQL_BLANK_LINE);
 		output.add(SQL_BLANK_LINE);
 
-		output.add("INSERT INTO \"EAT\".\"M_FORM\" (FORM_NAME, FORM_DESCRIPTION, MANAGER_CLASS, ENTITY_MANAGER, CLASS_NAME, PK_NAME, DOMAIN, FORM_LAYOUT) VALUES ('"
+		output.add("INSERT INTO \"EAT\".\"M_FORM\" (FORM_NAME, FORM_DESCRIPTION, MANAGER_CLASS, ENTITY_MANAGER, CLASS_NAME, PK_NAME, DOMAIN, FORM_LAYOUT, COLUMNS) VALUES ('"
 				+ gui.getFormName()
 				+ "', '"
 				+ gui.getName()
@@ -28,7 +28,7 @@ public class SqlFormBuilder extends BaseSqlBuilder {
 				+ ENTITY_MANAGER
 				+ "', 'srms.acquisition.forms.inwi."
 				+ gui.getFormModelClass()
-				+ "', 'ROW_NUM', '" + DOMAIN + "', '2');");
+				+ "', 'ROW_NUM', '" + DOMAIN + "', '1', '3');");
 
 		/** Delete script */
 //		outputDelete.add("DELETE FROM \"EAT\".\"M_FORM\" WHERE FORM_NAME = '"+gui.getFormName()+"';");
