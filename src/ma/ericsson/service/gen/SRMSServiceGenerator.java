@@ -5,6 +5,7 @@ import java.util.List;
 
 import ma.ericsson.granite.cli.model.GUI;
 import ma.ericsson.granite.cli.model.GUIOperation;
+import ma.ericsson.granite.cli.util.ParserConstants;
 import ma.ericsson.utils.Utils;
 
 import org.apache.commons.logging.Log;
@@ -21,7 +22,6 @@ public class SRMSServiceGenerator {
 
 	public static void createClassService(GUI gui) {
 
-		String pkgName = "srms.acquisition.forms";
 		String className = gui.getFormManagerClass() + "FormService";
 
 		final JavaClassSource javaClass = Roaster.create(JavaClassSource.class);
