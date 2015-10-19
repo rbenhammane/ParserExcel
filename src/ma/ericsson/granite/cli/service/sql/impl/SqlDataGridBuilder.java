@@ -22,7 +22,7 @@ public class SqlDataGridBuilder extends BaseSqlBuilder {
 		output.add("-- DATAGRID");
 		output.add(SQL_BLANK_LINE);
 		output.add(SQL_BLANK_LINE);
-		output.add("INSERT INTO \"EAT\".\"M_DATAGRID\" (DATAGRID_NAME, DESCRIPTION, QUERY, DATASOURCE, DOMAIN, ACTION_EDIT, ACTION_NEW, ACTION_VIEW) VALUES ('"
+		output.add("INSERT INTO EAT.M_DATAGRID (DATAGRID_NAME, DESCRIPTION, QUERY, DATASOURCE, DOMAIN, ACTION_EDIT, ACTION_NEW, ACTION_VIEW) VALUES ('"
 				+ gui.getGridName()
 				+ "', '"
 				+ gui.getName()
@@ -44,14 +44,14 @@ public class SqlDataGridBuilder extends BaseSqlBuilder {
 		output.add(SQL_BLANK_LINE);
 		output.add(SQL_BLANK_LINE);
 		
-		outputDelete.add(SQL_BLANK_LINE);
-		outputDelete.add("-- DELETE DATAGRID SICS");
-		outputDelete.add(SQL_BLANK_LINE);
+//		outputDelete.add(SQL_BLANK_LINE);
+//		outputDelete.add("-- DELETE DATAGRID SICS");
+//		outputDelete.add(SQL_BLANK_LINE);
 		for (String sic : sics.keySet()) {
 			output.add(ParserUtils.generateSicQuery(sic, sics.get(sic)));
 			
-			outputDelete.add("DELETE FROM \"EAT\".\"I_DICTIONARY\" WHERE SIC = '"+sic+"' and DOMAIN = '"+DOMAIN+"';");
-			outputDelete.add(SQL_BLANK_LINE);
+//			outputDelete.add("DELETE FROM \"EAT\".\"I_DICTIONARY\" WHERE SIC = '"+sic+"' and DOMAIN = '"+DOMAIN+"';");
+//			outputDelete.add(SQL_BLANK_LINE);
 		}
 
 		output.add(SQL_BLANK_LINE);

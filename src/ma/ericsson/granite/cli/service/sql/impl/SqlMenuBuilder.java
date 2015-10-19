@@ -36,7 +36,6 @@ public class SqlMenuBuilder extends BaseSqlBuilder {
 		outputDelete.add(SQL_BLANK_LINE);
 		
 		
-		sics.put(MENU_SIC_PREFIX + gui.getGridName(), gui.getName().replaceAll("'", "''"));
 		output.add(SQL_BLANK_LINE);
 		output.add("-- FORM FIELDS SICS");
 		output.add(SQL_BLANK_LINE);
@@ -45,11 +44,13 @@ public class SqlMenuBuilder extends BaseSqlBuilder {
 		outputDelete.add(SQL_BLANK_LINE);
 		outputDelete.add("-- DELETE MENU SICS");
 		outputDelete.add(SQL_BLANK_LINE);
-		for (String sic : sics.keySet()) {
-			output.add(ParserUtils.generateSicQuery(sic, sics.get(sic)));
+//		for (String sic : sics.keySet()) {
+			String sic = MENU_SIC_PREFIX + gui.getGridName();
+			String sicVal = gui.getName().replaceAll("'", "''");
+			output.add(ParserUtils.generateSicQuery(sic, sicVal));
 			
 			outputDelete.add("DELETE FROM \"EAT\".\"I_DICTIONARY\" WHERE SIC = '"+sic+"' and DOMAIN = '"+DOMAIN+"';");
 			outputDelete.add(SQL_BLANK_LINE);
-		}
+//		}
 	}
 }

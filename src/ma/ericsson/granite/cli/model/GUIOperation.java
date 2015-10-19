@@ -1,14 +1,20 @@
 package ma.ericsson.granite.cli.model;
 
+import ma.ericsson.granite.cli.util.ParserConstants;
 import ma.ericsson.utils.Utils;
 
 public class GUIOperation {
 
 	private String name;
 	private String comment;
+	private GUI gui;
+
+	public GUIOperation(GUI gui) {
+		this.gui = gui;
+	}
 
 	public String getName() {
-		return name;
+		return name.replace("'", " ");
 	}
 
 	public void setName(String name) {
@@ -24,7 +30,8 @@ public class GUIOperation {
 	}
 
 	public String getSicName() {
-		return Utils.clean(name, "");
+		return ParserConstants.BUTTON_FORM_SIC_PREFIX + gui.getFormName() + "." + getOperationName();
+		// return Utils.clean(name, "");
 	}
 
 	public String getOperationName() {

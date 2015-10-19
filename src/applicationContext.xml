@@ -56,9 +56,9 @@
 		<ref bean="sqlFormBuilder" />
 		<ref bean="sqlFormFieldBuilder" />
 		<ref bean="sqlFormButtonBuilder" />
-		<ref bean="sqlDataGridBuilderBuilder" />
+		<!--ref bean="sqlDataGridBuilderBuilder" />
 		<ref bean="sqlDataGridFieldBuilder" />
-		<ref bean="sqlMenuBuilder" />
+		<ref bean="sqlMenuBuilder" /-->
 	</util:list>
 
 	<bean id="sqlFormBuilder" class="ma.ericsson.granite.cli.service.sql.impl.SqlFormBuilder" />
@@ -67,9 +67,9 @@
 
 	<bean id="sqlFormButtonBuilder" class="ma.ericsson.granite.cli.service.sql.impl.SqlFormButtonBuilder" />
 	
-	<bean id="sqlDataGridBuilderBuilder" class="ma.ericsson.granite.cli.service.sql.impl.SqlDataGridBuilder" />
+	<!--bean id="sqlDataGridBuilderBuilder" class="ma.ericsson.granite.cli.service.sql.impl.SqlDataGridBuilder" />
 	
 	<bean id="sqlDataGridFieldBuilder" class="ma.ericsson.granite.cli.service.sql.impl.SqlDataGridFieldBuilder" />
 	
-	<bean id="sqlMenuBuilder" class="ma.ericsson.granite.cli.service.sql.impl.SqlMenuBuilder" />
+	<bean id="sqlMenuBuilder" class="ma.ericsson.granite.cli.service.sql.impl.SqlMenuBuilder" /-->
 </beans>

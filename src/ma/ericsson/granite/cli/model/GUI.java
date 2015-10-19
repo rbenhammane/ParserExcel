@@ -82,6 +82,6 @@ public class GUI {
 	}
 
 	public String getJSPName() {
-		return Utils.clean(name,"_") + ".jsp";
+		return (Utils.clean(name,"_") + ".jsp").toLowerCase();
 	}
 }

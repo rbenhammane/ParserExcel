@@ -17,14 +17,14 @@ public abstract class BaseSqlBuilder {
 
 	protected List<String> output;
 	protected List<String> outputDelete;
-	protected List<String> outputViewCReation;
+	protected List<String> outputViewCreation;
 
 	
 	public List<List<String>> build(GUI gui) {
 		List<List<String>> result = new ArrayList<List<String>>();
 		output = new ArrayList<String>();
 		outputDelete = new ArrayList<String>();
-		outputViewCReation = new ArrayList<String>();
+		outputViewCreation = new ArrayList<String>();
 		
 		setQueries(gui);
 
@@ -34,7 +34,7 @@ public abstract class BaseSqlBuilder {
 
 		result.add(output);
 		result.add(outputDelete);
-		result.add(outputViewCReation);
+		result.add(outputViewCreation);
 		
 		return result;
 	}

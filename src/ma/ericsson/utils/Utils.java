@@ -55,15 +55,23 @@ public class Utils {
 			outStr = outStr.replaceFirst(" +(.)", sep + matcher.group(1).toUpperCase());
 		}
 
-		outStr = outStr.replaceAll("é", "e")//
+		outStr = cleanSpecialChar(outStr);
+		return outStr;
+	}
+
+	public static String cleanSpecialChar(String outStr) {
+		return outStr.trim()//
+				.replaceAll("é", "e")//
 				.replaceAll("è", "e")//
 				.replaceAll("\\(", "")//
 				.replaceAll("\\)", "")//
+				.replaceAll(" ", "_")//
+				.replaceAll("\\.", "_")//
 				.replaceAll("-", "_")//
 				.replaceAll("'", "")//
 				.replaceAll("\\.", "_")//
-				.replaceAll("/", "_");
-		return outStr;
+				.replaceAll("/", "_")//
+				.replaceAll("__", "_");
 	}
 
 }

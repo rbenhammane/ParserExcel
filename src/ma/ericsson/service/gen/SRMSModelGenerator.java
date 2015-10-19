@@ -1,6 +1,7 @@
 package ma.ericsson.service.gen;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -10,11 +11,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 
 import ma.ericsson.granite.cli.model.GUI;
 import ma.ericsson.granite.cli.model.GUIAttribute;
+import ma.ericsson.granite.cli.util.ParserConstants;
 import ma.ericsson.utils.Utils;
 
 import org.apache.commons.lang3.StringUtils;
@@ -29,9 +29,7 @@ public class SRMSModelGenerator {
 
 	protected static final Log log = LogFactory.getLog(SRMSModelGenerator.class);
 
-	private final static String PKG_NAME = "srms.acquisition.forms.inwi";
-
-	private final static String SOURCE_PATH = "../SRMS/src-gen-model/srms/acquisition/forms/inwi/";
+	// private final static String PKG_NAME = "srms.acquisition.forms.inwi";
 
 	public static void createClassModel(GUI gui) {
 
@@ -40,7 +38,7 @@ public class SRMSModelGenerator {
 
 		final JavaClassSource javaClass = Roaster.create(JavaClassSource.class);
 		// classeName = StringUtils.capitalize(classeName.toLowerCase());
-		javaClass.setPackage(PKG_NAME).setName(classeName);
+		javaClass.setPackage(ParserConstants.MODEL_PACKAGE).setName(classeName);
 		javaClass.addImport(java.util.Date.class);
 
 		/*************/
@@ -63,25 +61,29 @@ public class SRMSModelGenerator {
 		for (GUIAttribute attr : attributes) {
 			// for (String attrName : mapNameType.keySet()) {
 			String attrName = attr.getAttributeName();
-			String attrType = attr.getDataType().toLowerCase();
+			if(attrName.isEmpty()){
+				continue;
+			}
+//			String attrType = attr.getDataType().toLowerCase();
+			String attrType = "String";
 
 			// TODO in GUI.java side
 			attrType = StringUtils.capitalize(attrType);
 			attrName = StringUtils.uncapitalize(attrName);
 
-			if (attrType.equals("Picklist")) {
-				attrType = "String";
-			}
+//			if (attrType.equals("Picklist")) {
+//				attrType = "String";
+//			}
 
 			// String attributName = Utils.normalize(attrName);
 			javaClass.addProperty(attrType, attrName);
 			FieldSource field = javaClass.getField(attrName);
 
-			if (attrType.equals("Date")) {
-				AnnotationSource annotation = field.addAnnotation(Temporal.class);
-				// annotation.setEnumValue(TemporalType.TIMESTAMP);
-				annotation.setEnumValue(TemporalType.DATE);
-			}
+//			if (attrType.equals("Date")) {
+//				AnnotationSource annotation = field.addAnnotation(Temporal.class);
+//				// annotation.setEnumValue(TemporalType.TIMESTAMP);
+//				annotation.setEnumValue(TemporalType.DATE);
+//			}
 			AnnotationSource annotation = field.addAnnotation(Column.class);
 			annotation.setLiteralValue("name", "\"" + attr.getColumnName().toUpperCase() + "\"");
 
@@ -91,6 +93,7 @@ public class SRMSModelGenerator {
 		/** @Table @Entity **/
 		/********************/
 		javaClass.addAnnotation(Entity.class);
+		javaClass.addInterface(Serializable.class);
 		// javaClass.addImport(GenericJsonSerializer.class);
 
 		// AnnotationSource jsonSerialize = javaClass.addAnnotation(JsonSerialize.class);
@@ -107,7 +110,7 @@ public class SRMSModelGenerator {
 		/** PRINT CODE SRC **/
 		/********************/
 		// System.out.println(javaClass);
-		Utils.setFileContent(new File(SOURCE_PATH + "/" + classeName + ".java"), javaClass.toString());
+		Utils.setFileContent(new File(ParserConstants.SOURCE_PATH_MODEL + "/" + classeName + ".java"), javaClass.toString());
 		System.out.println(classeName + ".java generated !");
 
 	}

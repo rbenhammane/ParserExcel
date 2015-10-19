@@ -43,6 +43,12 @@ public class ExcelGUIsParser implements SRMSParser<InputStream, List<GUI>> {
 			// Loops over the workbook sheets, and try to parse them one by one
 			for (int i = 1; i < wb.getNumberOfSheets(); i++) {
 				String sheetName = wb.getSheetAt(i).getSheetName();
+				if(sheetName.toLowerCase().startsWith("gen-")){
+					sheetName = sheetName.replace("gen-", "");
+				}else{
+					continue;					
+				}
+				
 				log.info("################################################################################");
 				log.info("Parsing sheet \"" + sheetName + "\"");
 				GUI gui = sheetParser.parse(wb.getSheetAt(i));
