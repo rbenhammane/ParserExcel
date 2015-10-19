@@ -36,7 +36,7 @@ public class Launcher {
 
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationResources.xml", "applicationContext.xml" });
 
-		SRMSParser<InputStream, List<GUI>> parser = (SRMSParser<InputStream, List<GUI>>) context.getBean("parser");
+		SRMSParser<InputStream, List<GUI>> parser = (SRMSParser<InputStream, List<GUI>>) context.getBean("singleGUIParser");
 
 		GUIBuilder<List<GUI>, Map<String, List<String>>> builder = (GUIBuilder<List<GUI>, Map<String, List<String>>>) context.getBean("builder");
 
@@ -47,21 +47,43 @@ public class Launcher {
 			FileInputStream in = new FileInputStream(file);
 			guis = parser.parseGUIs(in);
 
-			for (GUI gui : guis) {
-				try {
-					SRMSJspGenerator.createJSP(gui);
-					SRMSModelGenerator.createClassModel(gui);
-					SRMSServiceGenerator.createClassService(gui);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
+//			for (GUI gui : guis) {
+//				try {
+//					SRMSJspGenerator.createJSP(gui);
+//					SRMSModelGenerator.createClassModel(gui);
+//					SRMSServiceGenerator.createClassService(gui);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
 
 			output = builder.build(guis);
 			
 			PrintWriter writer;
 			for (String key : output.keySet()) {
-				if (key.contains("Delete")) {
+//				if (key.contains("Delete")) {
+//					writer = new PrintWriter("guis/gui_" + key + ".sql");
+//
+//					for (int i = 0; i < output.get(key).size(); i++) {
+//						writer.write(output.get(key).get(i));
+//					}
+//
+//					writer.flush();
+//					writer.close();
+//
+//				}
+//				else if (key.contains("GraniteView")) {
+//					writer = new PrintWriter("guis/gui_" + key + ".sql");
+//
+//					for (int i = 0; i < output.get(key).size(); i++) {
+//						writer.write(output.get(key).get(i));
+//					}
+//
+//					writer.flush();
+//					writer.close();
+//
+//				}
+//				else {
 					writer = new PrintWriter("guis/gui_" + key + ".sql");
 					
 					for (int i = 0; i < output.get(key).size(); i++) {
@@ -71,29 +93,7 @@ public class Launcher {
 					writer.flush();
 					writer.close();
 
-				}
-				else if (key.contains("GraniteView")) {
-					writer = new PrintWriter("guis/gui_" + key + ".sql");
-					
-					for (int i = 0; i < output.get(key).size(); i++) {
-						writer.write(output.get(key).get(i));
-					}
-
-					writer.flush();
-					writer.close();
-
-				}
-				else {
-					writer = new PrintWriter("guis/gui_" + key + ".sql");
-					
-					for (int i = 0; i < output.get(key).size(); i++) {
-						writer.write(output.get(key).get(i));
-					}
-
-					writer.flush();
-					writer.close();
-
-				}
+//				}
 			}
 
 		} catch (GUIParserInputException e) {
