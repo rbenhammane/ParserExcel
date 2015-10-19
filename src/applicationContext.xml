@@ -52,6 +52,10 @@
 		<property name="builders" ref="sqlBuilders" />
 	</bean>
 
+	<bean id="formBuilder" class="ma.ericsson.granite.cli.service.sql.SqlFormBuilder">
+		<property name="builders" ref="sqlFormBuilders" />
+	</bean>
+
 	<util:list id="sqlBuilders">
 		<ref bean="sqlFormBuilder" />
 		<ref bean="sqlFormFieldBuilder" />
@@ -66,6 +70,22 @@
 	<bean id="sqlFormFieldBuilder" class="ma.ericsson.granite.cli.service.sql.impl.SqlFormFieldBuilder" />
 
 	<bean id="sqlFormButtonBuilder" class="ma.ericsson.granite.cli.service.sql.impl.SqlFormButtonBuilder" />
+
+	<bean id="singleFormBuilder" class="ma.ericsson.granite.cli.service.sql.SqlFormBuilder">
+		<property name="builders" ref="sqlFormBuilders" />
+	</bean>
+
+	<util:list id="sqlFormBuilders">
+		<ref bean="sqlSingleFormBuilder" />
+		<ref bean="sqlSingleFormFieldBuilder" />
+		<ref bean="sqlSingleFormButtonBuilder" />
+	</util:list>
+
+	<bean id="sqlSingleFormBuilder" class="ma.ericsson.granite.cli.service.sql.impl.SqlSingleFormBuilder" />
+
+	<bean id="sqlSingleFormFieldBuilder" class="ma.ericsson.granite.cli.service.sql.impl.SqlSingleFormFieldBuilder" />
+
+	<bean id="sqlSingleFormButtonBuilder" class="ma.ericsson.granite.cli.service.sql.impl.SqlSingleFormButtonBuilder" />
 	
 	<!--bean id="sqlDataGridBuilderBuilder" class="ma.ericsson.granite.cli.service.sql.impl.SqlDataGridBuilder" />
 	

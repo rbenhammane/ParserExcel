@@ -12,6 +12,7 @@ import java.util.Map;
 
 import ma.ericsson.granite.cli.exception.GUIParserException;
 import ma.ericsson.granite.cli.exception.GUIParserInputException;
+import ma.ericsson.granite.cli.model.Form;
 import ma.ericsson.granite.cli.model.GUI;
 import ma.ericsson.granite.cli.service.GUIBuilder;
 import ma.ericsson.granite.cli.service.SRMSParser;
@@ -34,34 +35,33 @@ public class Launcher {
 	public static void main(String[] args) {
 
 		// String file = "SRMS_ScheduleAndEffort_v02_formatted.xlsx";
-		String file = "20151007 SRMS User interracrion Specification_formatted.xlsx";
+		String file = "gui.xlsx";
 
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationResources.xml", "applicationContext.xml" });
 
-		SRMSParser<InputStream, List<GUI>> parser = (SRMSParser<InputStream, List<GUI>>) context.getBean("singleGUIParser");
+		SRMSParser<InputStream, Form> parser = (SRMSParser<InputStream, Form>) context.getBean("singleGUIParser");
 
-		GUIBuilder<List<GUI>, Map<String, List<String>>> builder = (GUIBuilder<List<GUI>, Map<String, List<String>>>) context.getBean("builder");
+		GUIBuilder<Form, Map<String, List<String>>> builder = (GUIBuilder<Form, Map<String, List<String>>>) context.getBean("singleFormBuilder");
 
-		List<GUI> guis;
+		Form form;
 		Map<String, List<String>> output;
 
 		try {
 			FileInputStream in = new FileInputStream(file);
-			guis = parser.parseGUIs(in);
+			form = parser.parseGUIs(in);
 
-			for (GUI gui : guis) {
-				try {
-					SRMSConstantsGenerator.createConstants(gui);
-					SRMSJspGenerator.createJSP(gui);
-					SRMSModelGenerator.createClassModel(gui);
-					SRMSServiceGenerator.createClassService(gui);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
+//			try {
+//				SRMSConstantsGenerator.createConstants(form);
+//				SRMSJspGenerator.createJSP(form);
+//				SRMSModelGenerator.createClassModel(form);
+//				SRMSServiceGenerator.createClassService(form);
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+
 			SRMSConstantsGenerator.close();
 
-			output = builder.build(guis);
+			output = builder.build(form);
 			
 			PrintWriter writerAllSQL = new PrintWriter("guis/gui_all_EAT_INSERT.sql");;
 			PrintWriter writer;
