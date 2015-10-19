@@ -25,8 +25,10 @@ public class SqlDataGridFieldBuilder extends BaseSqlBuilder {
 		output.add(SQL_BLANK_LINE);
 		output.add(SQL_BLANK_LINE);
 		
-		outputDelete.add("-- Delete DATAGRID Field");
-		outputDelete.add(SQL_BLANK_LINE);
+//		outputDelete.add("-- Delete DATAGRID Field");
+//		outputDelete.add(SQL_BLANK_LINE);
+//		
+//		outputDelete.add("DELETE FROM \"EAT\".\"M_DATAGRID_FIELD\" WHERE DATAGRID_NAME = '"+gui.getGridName()+"';");
 		
 		for (GUIAttribute attribute : gui.getAttributes()) {
 			output.add("INSERT INTO \"EAT\".\"M_DATAGRID_FIELD\" (DATAGRID_NAME, FIELD_NAME, FIELD_TYPE, FIELD_CAPTION, FIELD_SIC, PRIVILEGE, VISIBLE, PRESENTATION_INDEX, PK, DEFAULT_WIDTH, DOMAIN, SORTABLE, FILTERABLE) VALUES ('"
@@ -44,36 +46,36 @@ public class SqlDataGridFieldBuilder extends BaseSqlBuilder {
 			
 			sics.put(FIELD_DATAGRID_SIC_PREFIX + attribute.getAttributeName(), attribute.getName().replaceAll("'", "''"));
 			/** Delete script */
-			outputDelete.add("DELETE FROM \"EAT\".\"M_DATAGRID_FIELD\" WHERE FIELD_NAME = '"+attribute.getColumnName().toUpperCase()+"' AND DATAGRID_NAME = '"+gui.getGridName()+"';");
-			outputDelete.add(SQL_BLANK_LINE);
+			// outputDelete.add("DELETE FROM \"EAT\".\"M_DATAGRID_FIELD\" WHERE FIELD_NAME = '"+attribute.getColumnName().toUpperCase()+"' AND DATAGRID_NAME = '"+gui.getGridName()+"';");
+//			outputDelete.add(SQL_BLANK_LINE);
 			attrs.add(attribute.getColumnName().toUpperCase());
 			
 			jpaAttr.put(attribute.getAttributeName(), "String");
 		}
 		// delete Datagrid
-		outputDelete.add("-- Delete DATAGRID");
-		outputDelete.add(SQL_BLANK_LINE);
-		outputDelete.add("DELETE FROM \"EAT\".\"M_DATAGRID\" WHERE DATAGRID_NAME = '"+gui.getGridName()+"';");
-		outputDelete.add(SQL_BLANK_LINE);
+//		outputDelete.add("-- Delete DATAGRID");
+//		outputDelete.add(SQL_BLANK_LINE);
+//		outputDelete.add("DELETE FROM \"EAT\".\"M_DATAGRID\" WHERE DATAGRID_NAME = '"+gui.getGridName()+"';");
+//		outputDelete.add(SQL_BLANK_LINE);
 		
 		output.add("-- DATAGRID FIELDS SICS");
 		output.add(SQL_BLANK_LINE);
 		output.add(SQL_BLANK_LINE);
 		
-		outputDelete.add(SQL_BLANK_LINE);
-		outputDelete.add("-- DELETE DATAGRID FIELD SICS");
-		outputDelete.add(SQL_BLANK_LINE);
+//		outputDelete.add(SQL_BLANK_LINE);
+//		outputDelete.add("-- DELETE DATAGRID FIELD SICS");
+//		outputDelete.add(SQL_BLANK_LINE);
 		for (String sic : sics.keySet()) {
 			output.add(ParserUtils.generateSicQuery(sic, sics.get(sic)));
 			output.add(SQL_BLANK_LINE);
 			
-			outputDelete.add("DELETE FROM \"EAT\".\"I_DICTIONARY\" WHERE SIC = '"+sic+"' and DOMAIN = '"+DOMAIN+"';");
-			outputDelete.add(SQL_BLANK_LINE);
+//			outputDelete.add("DELETE FROM \"EAT\".\"I_DICTIONARY\" WHERE SIC = '"+sic+"' and DOMAIN = '"+DOMAIN+"';");
+//			outputDelete.add(SQL_BLANK_LINE);
 		}
 		output.add(SQL_BLANK_LINE);
 		
 		// view creation
-		outputViewCReation = ParserUtils.createGraniteView(attrs, gui);
+//		outputViewCreation = ParserUtils.createGraniteView(attrs, gui);
 
 		
 	}

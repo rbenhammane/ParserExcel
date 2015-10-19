@@ -1,0 +1,18 @@
+-- drop user the_user cascade;
+CREATE USER the_user
+  IDENTIFIED BY the_user
+  DEFAULT TABLESPACE USERS
+  TEMPORARY TABLESPACE TEMP
+  PROFILE DEFAULT
+  ACCOUNT UNLOCK;
+  -- 2 Roles for the_user 
+  GRANT RESOURCE TO the_user;
+  GRANT CONNECT TO the_user;
+  ALTER USER the_user DEFAULT ROLE ALL;
+  -- 4 System Privileges for the_user 
+  GRANT CREATE ANY DIRECTORY TO the_user;
+  GRANT CREATE USER TO the_user;
+  GRANT UNLIMITED TABLESPACE TO the_user;
+  GRANT CREATE ANY VIEW TO the_user;
+  -- GRANT CREATE materialized VIEW TO the_user;
+--  GRANT SELECT TO the_user;

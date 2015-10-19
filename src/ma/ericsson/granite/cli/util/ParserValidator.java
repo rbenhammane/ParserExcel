@@ -1,8 +1,6 @@
 package ma.ericsson.granite.cli.util;
 
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 import ma.ericsson.granite.cli.dao.OfferDAO;
 import ma.ericsson.granite.cli.service.excel.ExcelParserContext;
@@ -28,21 +26,21 @@ public class ParserValidator {
 		return true;
 	}
 
-//	public int validateProductCode(ExcelParserContext context, Cell cell) {
-//		if (!validateValue(cell)) {
-//			return 0;
-//		}
-//
-//		return jdbcOfferDAO.getProductId(context.getIdOffer(), cell.getStringCellValue());
-//	}
-//
-//	public int validateProductCode(ExcelParserContext context, String productCode) {
-//		if (productCode == null) {
-//			return 0;
-//		}
-//
-//		return jdbcOfferDAO.getProductId(context.getIdOffer(), productCode);
-//	}
+	// public int validateProductCode(ExcelParserContext context, Cell cell) {
+	// if (!validateValue(cell)) {
+	// return 0;
+	// }
+	//
+	// return jdbcOfferDAO.getProductId(context.getIdOffer(), cell.getStringCellValue());
+	// }
+	//
+	// public int validateProductCode(ExcelParserContext context, String productCode) {
+	// if (productCode == null) {
+	// return 0;
+	// }
+	//
+	// return jdbcOfferDAO.getProductId(context.getIdOffer(), productCode);
+	// }
 
 	public boolean validateProductDescription(ExcelParserContext context, Cell cell, int productId) {
 		if (!validateValue(cell) || productId == 0) {
@@ -78,8 +76,7 @@ public class ParserValidator {
 		try {
 			if (validateValue(cell)) {
 				for (int i = firstRow; i <= lastRow; i++) {
-					if (validateValue(sheet.getRow(i).getCell(col))
-							&& sheet.getRow(i).getCell(col).getStringCellValue().equals(cell.getStringCellValue())) {
+					if (validateValue(sheet.getRow(i).getCell(col)) && sheet.getRow(i).getCell(col).getStringCellValue().equals(cell.getStringCellValue())) {
 						return true;
 					}
 				}
@@ -109,8 +106,10 @@ public class ParserValidator {
 	// TODO need refactoring
 	public boolean validateValue(Cell cell) {
 
-		return cell != null && cell.getCellType() != Cell.CELL_TYPE_BLANK
-				&& !(cell.getCellType() == Cell.CELL_TYPE_STRING && "".equals(cell.getStringCellValue().trim()));
+		return cell != null //
+				&& cell.getCellType() != Cell.CELL_TYPE_BLANK//
+				&& !(cell.getCellType() == Cell.CELL_TYPE_STRING //
+				&& "".equals(cell.getStringCellValue().trim()));
 
 	}
 
@@ -136,7 +135,7 @@ public class ParserValidator {
 		if (cell == null) {
 			return null;
 		}
-		
+
 		if (cell.getCellType() == Cell.CELL_TYPE_STRING) {
 			return cell.getStringCellValue().trim();
 		}

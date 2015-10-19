@@ -1,8 +1,5 @@
 package ma.ericsson.granite.cli.model;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import ma.ericsson.utils.Utils;
 
 public class GUIAttribute {
@@ -12,6 +9,7 @@ public class GUIAttribute {
 	private String mapping;
 	private String dataType;
 	private String access;
+	private String otherInfo;
 
 	public String getName() {
 		return name;
@@ -30,7 +28,7 @@ public class GUIAttribute {
 	}
 
 	public String getMapping() {
-		return mapping;
+		return mapping == null ? "" : mapping;
 	}
 
 	public void setMapping(String mapping) {
@@ -46,7 +44,7 @@ public class GUIAttribute {
 	}
 
 	public String getAccess() {
-		return access;
+		return access == null ? "" : access;
 	}
 
 	public void setAccess(String access) {
@@ -54,11 +52,15 @@ public class GUIAttribute {
 	}
 
 	public String getGroupName() {
-		return mapping.substring(mapping.indexOf('/') + 1, mapping.indexOf('.'));
+		return getMapping().substring(getMapping().indexOf('/') + 1, mapping.indexOf('.'));
 	}
 
 	public String getAttributeName() {
-		return Utils.clean(mapping.toLowerCase(), "");
+		return Utils.clean(getName().toLowerCase(), "");
+		
+		// return Utils.clean(getMapping().toLowerCase(), "");
+		
+		
 		// String str = mapping.substring(mapping.indexOf('.') + 1);
 		//
 		// Matcher matcher = Pattern.compile(" +(.)").matcher(str);
@@ -83,5 +85,49 @@ public class GUIAttribute {
 
 	public String getColumnName() {
 		return Utils.clean(mapping, "_");
+	}
+
+	public String getOtherInfo() {
+		return otherInfo;
+	}
+
+	public void setOtherInfo(String otherInfo) {
+		this.otherInfo = otherInfo;
+	}
+
+	public String getComboName() {
+		if (getDataType() == null || !getDataType().toLowerCase().equals("picklist")) {
+			return "null";
+		}
+
+		if (otherInfo.contains("COMBO_NAME")) {
+			return "'" + otherInfo.split("COMBO_NAME=")[1].split(";")[0] + "'";
+		}
+		return "'XLS DEF NOT FOUND'";
+	}
+
+	public boolean getIsHidden() {
+		return otherInfo.toLowerCase().contains("hidden");
+	}
+
+	public String getFormFieldType() {
+		if (getDataType() == null) {
+			return "0";
+		}
+		if (getDataType().toLowerCase().equals("date")) {
+			return "4";
+		} else if (getDataType().toLowerCase().equals("textarea")) {
+			return "10";
+		} else if (getDataType().toLowerCase().equals("picklist")) {
+			return "13";
+		} else {
+			return "0";
+		}
+
+	}
+
+	public String getFieldType() {
+		// return getDataType().toLowerCase().equals("picklist") ? "13" : "1";
+		return "0";
 	}
 }
