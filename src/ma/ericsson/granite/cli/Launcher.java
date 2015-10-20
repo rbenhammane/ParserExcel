@@ -41,10 +41,10 @@ public class Launcher {
 
 		SRMSParser<InputStream, Form> parser = (SRMSParser<InputStream, Form>) context.getBean("singleGUIParser");
 
-		GUIBuilder<Form, Map<String, List<String>>> builder = (GUIBuilder<Form, Map<String, List<String>>>) context.getBean("singleFormBuilder");
+		GUIBuilder<Form, List<String>> builder = (GUIBuilder<Form, List<String>>) context.getBean("singleFormBuilder");
 
 		Form form;
-		Map<String, List<String>> output;
+		List<String> output;
 
 		try {
 			FileInputStream in = new FileInputStream(file);
@@ -59,54 +59,18 @@ public class Launcher {
 //				e.printStackTrace();
 //			}
 
-			SRMSConstantsGenerator.close();
+//			SRMSConstantsGenerator.close();
 
 			output = builder.build(form);
-			
-			PrintWriter writerAllSQL = new PrintWriter("guis/gui_all_EAT_INSERT.sql");;
-			PrintWriter writer;
-			for (String key : output.keySet()) {
 
-				if (key.contains("Delete")) {
-					writer = new PrintWriter("guis/gui_" + key + ".sql");
-					
-					for (int i = 0; i < output.get(key).size(); i++) {
-						writer.write(output.get(key).get(i));
-						writerAllSQL.write(output.get(key).get(i));
-					}
+			PrintWriter writer = new PrintWriter("gui.sql");
 
-					writer.flush();
-					writer.close();
-
-				}
-				else if (key.contains("GraniteView")) {
-					writer = new PrintWriter("guis/gui_" + key + ".sql");
-					
-					for (int i = 0; i < output.get(key).size(); i++) {
-						writer.write(output.get(key).get(i));
-						writerAllSQL.write(output.get(key).get(i));
-					}
-
-					writer.flush();
-					writer.close();
-
-				}
-				else {
-					writer = new PrintWriter("guis/gui_" + key + ".sql");
-					
-					for (int i = 0; i < output.get(key).size(); i++) {
-						writer.write(output.get(key).get(i));
-						writerAllSQL.write(output.get(key).get(i));
-					}
-
-					writer.flush();
-					writer.close();
-
-				}
+			for (int i = 0; i < output.size(); i++) {
+				writer.write(output.get(i));
 			}
-			
-			writerAllSQL.flush();
-			writerAllSQL.close();
+
+			writer.flush();
+			writer.close();
 
 		} catch (GUIParserInputException e) {
 			String errorFile = file.substring(0, file.lastIndexOf('.')) + "_errors.xlsx";

@@ -3,6 +3,7 @@ package ma.ericsson.granite.cli.service.excel;
 import ma.ericsson.granite.cli.exception.ExcelSheetException;
 import ma.ericsson.granite.cli.exception.GUIParserException;
 import ma.ericsson.granite.cli.exception.GUIParserInputException;
+import ma.ericsson.granite.cli.model.Form;
 import ma.ericsson.granite.cli.model.GUI;
 import ma.ericsson.granite.cli.service.SRMSParser;
 import org.apache.commons.logging.Log;
@@ -17,22 +18,22 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.List;
 
-public class ExcelGUIParser implements SRMSParser<InputStream, List<GUI>> {
+public class ExcelGUIParser implements SRMSParser<InputStream, Form> {
 
 	protected final Log log = LogFactory.getLog(getClass());
 
-	private ExcelSheetParser<Sheet, GUI> sheetParser;
-	private ExcelParserContext context;
+	private ExcelSheetParser<Sheet, Form> sheetParser;
+	private ExcelFormParserContext context;
 
-	public void setSheetParser(ExcelSheetParser<Sheet, GUI> sheetParser) {
+	public void setSheetParser(ExcelSheetParser<Sheet, Form> sheetParser) {
 		this.sheetParser = sheetParser;
 	}
 
-	public void setContext(ExcelParserContext context) {
+	public void setContext(ExcelFormParserContext context) {
 		this.context = context;
 	}
 
-	public List<GUI> parseGUIs(InputStream input) throws GUIParserException {
+	public Form parseGUIs(InputStream input) throws GUIParserException {
 		try {
 			// Creates the workbook from the input stream
 			Workbook wb = new XSSFWorkbook(input);
@@ -43,13 +44,13 @@ public class ExcelGUIParser implements SRMSParser<InputStream, List<GUI>> {
 			String sheetName = wb.getSheetAt(1).getSheetName();
 			log.info("################################################################################");
 			log.info("Parsing sheet \"" + sheetName + "\"");
-			GUI gui = sheetParser.parse(wb.getSheetAt(1));
+			Form form = sheetParser.parse(wb.getSheetAt(0));
 
-			if (gui == null) {
+			if (form == null) {
 				log.warn("Sheet \"" + sheetName + "\" contains errors");
 				error = true;
 			} else {
-				context.getData().add(gui);
+				context.setData(form);
 				log.info("Sheet \"" + sheetName + "\" parsed successfully");
 			}
 

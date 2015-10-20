@@ -16,23 +16,17 @@ public abstract class BaseSqlFormBuilder {
 	private ApplicationContext applicationContext;
 
 	protected List<String> output;
-	protected List<String> outputDelete;
-	protected List<String> outputViewCreation;
 
 	
 	public List<String> build(Form form) {
-		List<String> result = new ArrayList<String>();
 		output = new ArrayList<String>();
-		outputDelete = new ArrayList<String>();
-		outputViewCreation = new ArrayList<String>();
 		
 		setQueries(form);
 
 		output.add(SQL_BLANK_LINE);
 		output.add(SQL_BLANK_LINE);
-		output.add(SQL_BLANK_LINE);
 		
-		return result;
+		return output;
 	}
 
 	public abstract void setQueries(Form form);

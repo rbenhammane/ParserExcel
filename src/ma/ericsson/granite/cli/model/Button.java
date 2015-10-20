@@ -11,6 +11,8 @@ public class Button {
     private Integer height;
     private Integer xPosition;
     private Integer yPosition;
+    private String onChange = "";
+    private String sic;
 
     public String getName() {
         return name;
@@ -58,5 +60,21 @@ public class Button {
 
     public void setyPosition(Integer yPosition) {
         this.yPosition = yPosition;
+    }
+
+    public String getOnChange() {
+        return onChange;
+    }
+
+    public void setOnChange(String onChange) {
+        this.onChange = onChange;
+    }
+
+    public String getSic() {
+        return sic;
+    }
+
+    public void setSic(String sic) {
+        this.sic = sic;
     }
 }

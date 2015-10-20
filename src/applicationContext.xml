@@ -20,13 +20,15 @@
 	</bean>
 
 	<bean id="singleGUIParser" class="ma.ericsson.granite.cli.service.excel.ExcelGUIParser">
-		<property name="context" ref="excelContext" />
+		<property name="context" ref="excelFormContext" />
 		<property name="sheetParser" ref="excelSingleGUISheetParser" />
 	</bean>
 
 	<bean id="excelContext" class="ma.ericsson.granite.cli.service.excel.ExcelParserContext">
 		<property name="data" ref="list" />
 	</bean>
+
+	<bean id="excelFormContext" class="ma.ericsson.granite.cli.service.excel.ExcelFormParserContext" />
 
 	<bean id="excelGUISheetParser" class="ma.ericsson.granite.cli.service.excel.impl.ExcelGUISheetParser">
 		<property name="validator" ref="validator" />
@@ -76,10 +78,13 @@
 	</bean>
 
 	<util:list id="sqlFormBuilders">
+		<ref bean="sqlSingleFormDeleteBuilder" />
 		<ref bean="sqlSingleFormBuilder" />
 		<ref bean="sqlSingleFormFieldBuilder" />
 		<ref bean="sqlSingleFormButtonBuilder" />
 	</util:list>
+
+	<bean id="sqlSingleFormDeleteBuilder" class="ma.ericsson.granite.cli.service.sql.impl.SqlSingleFormDeleteBuilder" />
 
 	<bean id="sqlSingleFormBuilder" class="ma.ericsson.granite.cli.service.sql.impl.SqlSingleFormBuilder" />
 

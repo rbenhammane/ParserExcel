@@ -12,14 +12,13 @@ public class Field {
     private String attributeValue;
     private String sic;
     private boolean mandatory;
-    private boolean file;
     private Integer type;
     private Integer formType;
     private boolean pk;
     private boolean visible;
     private boolean readOnly;
-    private Integer xPosition;
-    private Integer yPosition;
+    private Integer xPosition = 0;
+    private Integer yPosition = 0;
 
     public String getName() {
         return name;
@@ -75,14 +74,6 @@ public class Field {
 
     public void setMandatory(boolean mandatory) {
         this.mandatory = mandatory;
-    }
-
-    public boolean isFile() {
-        return file;
-    }
-
-    public void setFile(boolean file) {
-        this.file = file;
     }
 
     public Integer getType() {
