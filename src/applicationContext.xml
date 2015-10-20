@@ -14,21 +14,33 @@
 
 	<bean id="validator" class="ma.ericsson.granite.cli.util.ParserValidator" />
 
-	<bean id="jdbcOfferDAO" class="ma.ericsson.granite.cli.dao.jdbc.JdbcOfferDAO" />
-
 	<bean id="parser" class="ma.ericsson.granite.cli.service.excel.ExcelGUIsParser">
 		<property name="context" ref="excelContext" />
 		<property name="sheetParser" ref="excelGUISheetParser" />
+	</bean>
+
+	<bean id="singleGUIParser" class="ma.ericsson.granite.cli.service.excel.ExcelGUIParser">
+		<property name="context" ref="excelFormContext" />
+		<property name="sheetParser" ref="excelSingleGUISheetParser" />
 	</bean>
 
 	<bean id="excelContext" class="ma.ericsson.granite.cli.service.excel.ExcelParserContext">
 		<property name="data" ref="list" />
 	</bean>
 
+	<bean id="excelFormContext" class="ma.ericsson.granite.cli.service.excel.ExcelFormParserContext" />
+
 	<bean id="excelGUISheetParser" class="ma.ericsson.granite.cli.service.excel.impl.ExcelGUISheetParser">
 		<property name="validator" ref="validator" />
 		<property name="context" ref="excelContext" />
 		<property name="row" value="1" />
+		<property name="col" value="0" />
+	</bean>
+
+	<bean id="excelSingleGUISheetParser" class="ma.ericsson.granite.cli.service.excel.impl.ExcelSingleGUISheetParser">
+		<property name="validator" ref="validator" />
+		<property name="context" ref="excelContext" />
+		<property name="row" value="0" />
 		<property name="col" value="0" />
 	</bean>
 	
@@ -40,6 +52,10 @@
 
 	<bean id="builder" class="ma.ericsson.granite.cli.service.sql.SqlGUIBuilder">
 		<property name="builders" ref="sqlBuilders" />
+	</bean>
+
+	<bean id="formBuilder" class="ma.ericsson.granite.cli.service.sql.SqlFormBuilder">
+		<property name="builders" ref="sqlFormBuilders" />
 	</bean>
 
 	<util:list id="sqlBuilders">
@@ -56,6 +72,25 @@
 	<bean id="sqlFormFieldBuilder" class="ma.ericsson.granite.cli.service.sql.impl.SqlFormFieldBuilder" />
 
 	<bean id="sqlFormButtonBuilder" class="ma.ericsson.granite.cli.service.sql.impl.SqlFormButtonBuilder" />
+
+	<bean id="singleFormBuilder" class="ma.ericsson.granite.cli.service.sql.SqlFormBuilder">
+		<property name="builders" ref="sqlFormBuilders" />
+	</bean>
+
+	<util:list id="sqlFormBuilders">
+		<ref bean="sqlSingleFormDeleteBuilder" />
+		<ref bean="sqlSingleFormBuilder" />
+		<ref bean="sqlSingleFormFieldBuilder" />
+		<ref bean="sqlSingleFormButtonBuilder" />
+	</util:list>
+
+	<bean id="sqlSingleFormDeleteBuilder" class="ma.ericsson.granite.cli.service.sql.impl.SqlSingleFormDeleteBuilder" />
+
+	<bean id="sqlSingleFormBuilder" class="ma.ericsson.granite.cli.service.sql.impl.SqlSingleFormBuilder" />
+
+	<bean id="sqlSingleFormFieldBuilder" class="ma.ericsson.granite.cli.service.sql.impl.SqlSingleFormFieldBuilder" />
+
+	<bean id="sqlSingleFormButtonBuilder" class="ma.ericsson.granite.cli.service.sql.impl.SqlSingleFormButtonBuilder" />
 	
 	<!--bean id="sqlDataGridBuilderBuilder" class="ma.ericsson.granite.cli.service.sql.impl.SqlDataGridBuilder" />
 	

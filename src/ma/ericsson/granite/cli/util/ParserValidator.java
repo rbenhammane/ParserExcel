@@ -15,9 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class ParserValidator {
 
-	@Autowired
-	private OfferDAO jdbcOfferDAO;
-
 	public boolean validateOfferTyping(ExcelParserContext context, Cell cell) {
 		return true;
 	}
@@ -42,34 +39,9 @@ public class ParserValidator {
 	// return jdbcOfferDAO.getProductId(context.getIdOffer(), productCode);
 	// }
 
-	public boolean validateProductDescription(ExcelParserContext context, Cell cell, int productId) {
-		if (!validateValue(cell) || productId == 0) {
-			return false;
-		}
-
-		String productDescription = jdbcOfferDAO.getProductDescription(productId);
-		return cell.getStringCellValue().equals(productDescription);
-	}
 
 	public boolean validateOptionDescription(ExcelParserContext context, Cell cell, Cell productCode) {
 		return true;
-	}
-
-	public String validateAttributeCode(ExcelParserContext context, Cell cell, long productId) {
-		if (!validateValue(cell) || productId == 0) {
-			return null;
-		}
-
-		return jdbcOfferDAO.getAttributeCode(productId, cell.getStringCellValue());
-	}
-
-	public boolean validateAttributeDescription(ExcelParserContext context, Cell cell, String attributeCode) {
-		if (!validateValue(cell)) {
-			return false;
-		}
-
-		String attibutDescription = jdbcOfferDAO.getAttributeDescription(attributeCode);
-		return cell.getStringCellValue().equals(attibutDescription);
 	}
 
 	public boolean validateDefaultValue(ExcelParserContext context, Sheet sheet, Cell cell, int firstRow, int lastRow, int col) {
@@ -89,14 +61,6 @@ public class ParserValidator {
 			System.out.println("Error row : " + firstRow + ", col : " + col);
 			throw e;
 		}
-	}
-
-	public String validateValueDescription(ExcelParserContext context, Cell cell, String attributeCode) {
-		if (!validateValue(cell)) {
-			return null;
-		}
-
-		return jdbcOfferDAO.getAttributeValueCode(attributeCode, getValue(cell));
 	}
 
 	public boolean validateEndDate(Cell cell) {
