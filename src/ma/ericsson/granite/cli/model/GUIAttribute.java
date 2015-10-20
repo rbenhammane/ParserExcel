@@ -84,7 +84,7 @@ public class GUIAttribute {
 	}
 
 	public String getColumnName() {
-		return Utils.clean(mapping, "_");
+		return Utils.clean(getMapping(), "_");
 	}
 
 	public String getOtherInfo() {

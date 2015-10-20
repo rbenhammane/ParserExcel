@@ -131,4 +131,8 @@ public class Field {
     public void setyPosition(Integer yPosition) {
         this.yPosition = yPosition;
     }
+
+	public boolean isFile() {
+		return "ATTACHEMENT".equals(getGroupKey());
+	}
 }

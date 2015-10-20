@@ -3,6 +3,8 @@ package ma.ericsson.service.gen;
 import java.io.File;
 import java.util.List;
 
+import ma.ericsson.granite.cli.model.Field;
+import ma.ericsson.granite.cli.model.Form;
 import ma.ericsson.granite.cli.model.GUI;
 import ma.ericsson.granite.cli.model.GUIAttribute;
 import ma.ericsson.granite.cli.util.ParserConstants;
@@ -23,6 +25,7 @@ public class SRMSConstantsGenerator {
 		javaClass.setPackage("srms.util").setName(className);
 	}
 
+	@Deprecated
 	public static void createConstants(GUI gui) {
 
 		javaClass.addField() //
@@ -67,6 +70,15 @@ public class SRMSConstantsGenerator {
 		System.out.println(val);
 		System.out.println(Utils.cleanSpecialChar(val).toUpperCase());
 
+	}
+
+	public static void createConstants(Form form) {
+//		List<Field> listField = form.getFieldList();
+//		for (Field field : listField) {
+//			field.getGroupKey();
+//			field.getAttributeKey();
+//			field.getAttributeValue();
+//		}
 	}
 
 }

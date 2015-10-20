@@ -90,4 +90,13 @@ public class Form {
     public void setButtonList(List<Button> buttonList) {
         this.buttonList = buttonList;
     }
+
+	public boolean hasAttachment() {
+		for(Field field : getFieldList()){
+			if(field.isFile()){
+				return true;
+			}
+		}
+		return false;
+	}
 }

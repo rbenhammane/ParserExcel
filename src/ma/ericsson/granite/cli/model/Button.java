@@ -13,6 +13,7 @@ public class Button {
     private Integer yPosition;
     private String onChange = "";
     private String sic;
+    private String operation;
 
     public String getName() {
         return name;
@@ -77,4 +78,12 @@ public class Button {
     public void setSic(String sic) {
         this.sic = sic;
     }
+
+	public String getOperation() {
+		return operation;
+	}
+
+	public void setOperation(String operation) {
+		this.operation = operation;
+	}
 }

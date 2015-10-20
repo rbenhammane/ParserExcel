@@ -332,6 +332,10 @@ public class ExcelSingleGUISheetParser extends BaseExcelFormSheetParser {
 								button.setName(value);
 								index++;
 							}
+							
+							if ((value = validator.getValue(sheet.getRow(i).getCell(topLeftCellCol + index++))) != null) {
+								button.setOperation(value);
+							}
 
 							if ((value = validator.getValue(sheet.getRow(i).getCell(topLeftCellCol + index))) == null) {
 								validator.setError(sheet, i, topLeftCellCol + index++);
