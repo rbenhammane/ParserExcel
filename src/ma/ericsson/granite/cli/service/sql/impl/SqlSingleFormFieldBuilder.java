@@ -41,8 +41,9 @@ public class SqlSingleFormFieldBuilder extends BaseSqlFormBuilder {
                     "VALUES\n" +
                     "('" + form.getName() + "', '" + field.getName() + "', '" + field.getDescription().replace("'", "\\\\''") + "', '" + field.getName() + "', '"
                     + (field.getSic().trim().startsWith("field") ? field.getSic() : "field." + form.getSic() + "." + field.getSic()) + "', '" + (field.isMandatory() ? "Y" : "N") + "', "
-                    + field.getType() + ", " + field.getFormType() + ", 0, 0, '" + (field.isPk() ? "Y" : "N") + "', " + (50 + index) + ", '" + (field.isVisible() ? "Y" : "N") + "', '"
-                    + (field.isReadOnly() ? "Y" : "N") + "', '*', '*', 'INWI', " + (field.getxPosition() + FIELD_WIDTH) + ", " + field.getyPosition() + ", " + FIELD_WIDTH + ", 20);\n");
+                    + field.getType() + ", " + field.getFormType() + ", 0, 0, '" + (field.isPk() ? "Y" : "N") + "', " + (50 + index) + ", '" + (field.isVisible() ? "Y" : "H") + "', '"
+                    + (field.isReadOnly() ? "Y" : "N") + "', '*', '*', 'INWI', " + (field.getxPosition() + FIELD_WIDTH) + ", " + field.getyPosition() + ", "
+                    + (field.getWidth() != null ? field.getWidth() : FIELD_WIDTH) + ", " + (field.getHeight() != null ? field.getHeight() : "20") + ");\n");
             output.add(SQL_BLANK_LINE);
             index++;
         }

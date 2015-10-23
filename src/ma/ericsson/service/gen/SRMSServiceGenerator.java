@@ -5,6 +5,7 @@ import static ma.ericsson.granite.cli.util.ParserConstants.SERVICE_PACKAGE;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import ma.ericsson.granite.cli.model.Button;
 import ma.ericsson.granite.cli.model.Field;
@@ -29,7 +30,7 @@ public class SRMSServiceGenerator {
 	public static void createClassService(Form form) {
 		List<Field> listField = form.getFieldList();
 		for (Field field : listField) {
-			field.getGroupKey();
+			field.getGroup();
 			field.getAttributeKey();
 			field.getAttributeValue();
 		}
@@ -42,13 +43,31 @@ public class SRMSServiceGenerator {
 		// javaClass.setSuperType("srms.services.GraniteFormService");
 		javaClass.setSuperType("srms.acquisition.forms.inwi.CommonGraniteFormService");
 		javaClass.addImport("org.slf4j.LoggerFactory");
-		javaClass.addImport("model.inwi.generic.GenSiteModel");
 		javaClass.addImport("it.pride.eat.core.EntityManagerUtils");
 		javaClass.addImport("srms.util.UtilsGraniteService");
 		javaClass.addImport("srms.exception.SiteNotExsitsException");
+		javaClass.addImport(Map.class);
 		
 		javaClass.addImport(java.lang.reflect.Method.class);
 		javaClass.addImport("srms.util.SRMSConstants.*").setStatic(true);
+
+		/*************/
+		/*************/
+
+		String methodDetMandatoryFieldsBody = "Map<String, String> fields = new HashMap<>();";
+		for (Field field : form.getFieldList()) {
+			if (field.isMandatory() && !field.isReadOnly()) {
+				methodDetMandatoryFieldsBody += "fields.put(\"" + field.getName() + "\", \"" + field.getDescription() + " est vide\");";
+			}
+		}
+		methodDetMandatoryFieldsBody += "return fields;";
+
+		MethodSource methodGetMandatoryFields = javaClass.addMethod() //
+				.setProtected() //
+				.setName("getMandatoryFields") //
+				.setBody(methodDetMandatoryFieldsBody);
+		methodGetMandatoryFields.addAnnotation(Override.class);
+		methodGetMandatoryFields.setReturnType("Map<String, String>");
 
 		/*************/
 		/*************/
@@ -91,17 +110,63 @@ public class SRMSServiceGenerator {
 
 		body += "try{";
 
-		body += "initializeServices();";
 		body += "startGraniteService();";
+		body += "initializeServices();";
 		body += "startTransaction();";
+		body += "AuthenticatedUser user = AuthenticatedUser.getUser(request.getSession());";
 
-		// for (GUIAttribute attr : attrs) {
-		// if (attr.getAccess() != null && attr.getAccess().contains("write") && !attr.getIsHidden()) {
-		// body += "if(checkMandatory(request, response,\"" + attr.getAttributeName() + "\", \"" + attr.getName() + " est vide\")){return;}";
-		// }
-		// }
+		if (form.hasAttachment()) {
+			body += "DiskFileUpload upload = new DiskFileUpload();";
+			body += "List itemsFields = upload.parseRequest(request);";
+		}
 
-		body += "Object jpa = loadValueForm(request, response, " + form.hasAttachment() + ");";
+		body += "if (!checkMandatoryFields(request, response, " + (form.hasAttachment() ? "itemsFields" : "null") + ")){return;}";
+
+		body += "Object jpa = loadValueForm(request, " + (form.hasAttachment() ? "itemsFields" : "null") + ");";
+
+		body += form.getModel() + " jpabean = (" + form.getModel() + ") jpa;";
+
+		body += "fetchSites(request, jpabean.getSiteInstId(), jpabean.getNomSiteInstId(), jpabean.getNgoSrmsInstId());";
+
+		String siteType;
+		for (Field field : form.getFieldList()) {
+
+			if (field.getGroup() != null && !field.getGroup().equals("") && !field.getGroup().equals("-") && !field.getGroup().equals("ATTACHEMENT") && field.isReadOnly()) {
+				switch (field.getGroup()) {
+
+					case "CANDIDATE-INFO":
+						javaClass.addImport("srms.util.GraniteAttributes.CandidateInfo.*").setStatic(true);
+						siteType = "siteCand";
+						break;
+
+					case "CANDIDATE-SITE-DATES":
+						javaClass.addImport("srms.util.GraniteAttributes.CandidateSiteDates.*").setStatic(true);
+						siteType = "siteCand";
+						break;
+
+					case "ROLLOUT-DATA":
+						javaClass.addImport("srms.util.GraniteAttributes.RolloutData.*").setStatic(true);
+						siteType = "siteNgo";
+						break;
+
+					case "SRMS-DATA":
+						javaClass.addImport("srms.util.GraniteAttributes.SrmsData.*").setStatic(true);
+						siteType = "siteNgo";
+						break;
+
+					case "SITE-INFO":
+						javaClass.addImport("srms.util.GraniteAttributes.SiteInfo.*").setStatic(true);
+						siteType = "siteNom";
+						break;
+
+					default:
+						siteType = "siteNom";
+				}
+
+				body += siteType + ".getDynamicAttributes().setObjectAttributeValue(createDA(" + field.getGroup().replaceAll("-", "_")
+						+ ", " + field.getAttributeKey() + ", jpabean.get" + Utils.upperCaseFirst(field.getName()) + "()));";
+			}
+		}
 
 		// for (GUIAttribute attr : attrs) {
 		// body += "String " + attr.getAttributeName() + " = request.getParameter(\"" + attr.getAttributeName() + "\");";
@@ -123,8 +188,6 @@ public class SRMSServiceGenerator {
 		// }
 		// }
 
-		body += "fetchSites(request, response);";
-
 		// TODO sendResponseError(response, msg_err);
 
 		body += "commitTransaction();";
@@ -137,7 +200,7 @@ public class SRMSServiceGenerator {
 		}
 
 		body += "}catch(SiteNotExsitsException sne){sendResponseError(response, sne.getMessage());}";
-		body += "}catch(Exception e){exception(response,e,log);}finally{stopServiceGranite();}";
+		body += "catch(Exception e){exception(response,e,log);}finally{stopServiceGranite();}";
 
 		/********************/
 		/***** OPERATION ****/
@@ -145,7 +208,7 @@ public class SRMSServiceGenerator {
 		List<Button> buttons = form.getButtonList();
 		for (Button button : buttons) {
 			if (button.getOperation() != null) {
-				String opName = button.getName();
+				String opName = button.getOperation();
 
 				// body = "int a=2;";
 				MethodSource<JavaClassSource> methodAction = javaClass.addMethod() //

@@ -19,6 +19,8 @@ public class Field {
     private boolean readOnly;
     private Integer xPosition = 0;
     private Integer yPosition = 0;
+    private Integer width;
+    private Integer height;
 
     public String getName() {
         return name;
@@ -36,11 +38,11 @@ public class Field {
         this.description = description;
     }
 
-    public String getGroupKey() {
+    public String getGroup() {
         return group;
     }
 
-    public void setGroupKey(String groupKey) {
+    public void setGroup(String group) {
         this.group = group;
     }
 
@@ -133,6 +135,22 @@ public class Field {
     }
 
 	public boolean isFile() {
-		return "ATTACHEMENT".equals(getGroupKey());
+		return "ATTACHEMENT".equals(getGroup());
 	}
+
+    public Integer getWidth() {
+        return width;
+    }
+
+    public void setWidth(Integer width) {
+        this.width = width;
+    }
+
+    public Integer getHeight() {
+        return height;
+    }
+
+    public void setHeight(Integer height) {
+        this.height = height;
+    }
 }

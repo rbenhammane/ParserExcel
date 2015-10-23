@@ -53,7 +53,7 @@ public class Launcher {
 			try {
 //				SRMSConstantsGenerator.createConstants(form);
 //				SRMSJspGenerator.createJSP(form);
-//				SRMSModelGenerator.createClassModel(form);
+				SRMSModelGenerator.createClassModel(form);
 				SRMSServiceGenerator.createClassService(form);
 			} catch (Exception e) {
 				e.printStackTrace();

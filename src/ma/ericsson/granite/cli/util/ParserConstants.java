@@ -14,9 +14,9 @@ public class ParserConstants {
 	public static final String JPA_PACKAGE = "model";
 	public static final String JPA_PACKAGE_ACQUISITION = "model.acquisition";
 	public static final String SERVICE_PACKAGE = "srms.acquisition.forms.inwi";
-	public static final String MODEL_PACKAGE = "model.inwi.gen";
-	public final static String SOURCE_PATH_SERVICE = "../SRMS/src-gen-service/srms/acquisition/forms/inwi";
-	public final static String SOURCE_PATH_MODEL = "../SRMS/src-gen-model/model/inwi";
+	public static final String MODEL_PACKAGE = "model.inwi";
+	public final static String SOURCE_PATH_SERVICE = "src-gen/srms/acquisition/forms/inwi";
+	public final static String SOURCE_PATH_MODEL = "src-gen/model/inwi";
 	public static final String PRIVILLEGE_ALL = "*";
 
 	public static final String SQL_BLANK_LINE = "\n";

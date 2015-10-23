@@ -54,15 +54,15 @@ public class ExcelSingleGUISheetParser extends BaseExcelFormSheetParser {
 	private static final Map<String, Integer> Y_POSITIONS = new HashMap<>();
 	static {
 		Y_POSITIONS.put("1", 10);
-		Y_POSITIONS.put("2", 40);
-		Y_POSITIONS.put("3", 70);
-		Y_POSITIONS.put("4", 100);
-		Y_POSITIONS.put("5", 130);
-		Y_POSITIONS.put("6", 160);
-		Y_POSITIONS.put("7", 190);
-		Y_POSITIONS.put("8", 220);
-		Y_POSITIONS.put("9", 250);
-		Y_POSITIONS.put("10", 280);
+		Y_POSITIONS.put("2", 50);
+		Y_POSITIONS.put("3", 90);
+		Y_POSITIONS.put("4", 130);
+		Y_POSITIONS.put("5", 170);
+		Y_POSITIONS.put("6", 210);
+		Y_POSITIONS.put("7", 250);
+		Y_POSITIONS.put("8", 290);
+		Y_POSITIONS.put("9", 330);
+		Y_POSITIONS.put("10", 370);
 	}
 
 	@Override
@@ -212,7 +212,7 @@ public class ExcelSingleGUISheetParser extends BaseExcelFormSheetParser {
 								validator.setError(sheet, i, topLeftCellCol + index++);
 								error = true;
 							} else {
-								field.setGroupKey(value);
+								field.setGroup(value);
 								index++;
 							}
 
@@ -286,6 +286,14 @@ public class ExcelSingleGUISheetParser extends BaseExcelFormSheetParser {
 							} else {
 								field.setReadOnly(value.equals("YES"));
 								index++;
+							}
+
+							if ((value = validator.getValue(sheet.getRow(i).getCell(topLeftCellCol + index++))) != null && !value.equals("")) {
+								field.setWidth(Integer.parseInt(value));
+							}
+
+							if ((value = validator.getValue(sheet.getRow(i).getCell(topLeftCellCol + index++))) != null && !value.equals("")) {
+								field.setHeight(Integer.parseInt(value));
 							}
 
 							if (field.isVisible()) {
