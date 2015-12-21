@@ -46,6 +46,7 @@ public class SRMSServiceGenerator {
 		javaClass.addImport("it.pride.eat.core.EntityManagerUtils");
 		javaClass.addImport("srms.util.UtilsGraniteService");
 		javaClass.addImport("srms.exception.SiteNotExsitsException");
+		javaClass.addImport("it.pride.eat.authentication.AuthenticatedUser");
 		javaClass.addImport(Map.class);
 		
 		javaClass.addImport(java.lang.reflect.Method.class);
@@ -131,7 +132,7 @@ public class SRMSServiceGenerator {
 		String siteType;
 		for (Field field : form.getFieldList()) {
 
-			if (field.getGroup() != null && !field.getGroup().equals("") && !field.getGroup().equals("-") && !field.getGroup().equals("ATTACHEMENT") && field.isReadOnly()) {
+			if (field.getGroup() != null && !field.getGroup().equals("") && !field.getGroup().equals("-") && !field.getGroup().equals("ATTACHEMENT") && !field.isReadOnly()) {
 				switch (field.getGroup()) {
 
 					case "CANDIDATE-INFO":

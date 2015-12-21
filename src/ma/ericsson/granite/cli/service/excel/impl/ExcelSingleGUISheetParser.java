@@ -2,6 +2,8 @@ package ma.ericsson.granite.cli.service.excel.impl;
 
 import ma.ericsson.granite.cli.exception.ExcelSheetException;
 import ma.ericsson.granite.cli.model.*;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.poi.ss.usermodel.Sheet;
 
 import java.util.Arrays;
@@ -13,7 +15,7 @@ public class ExcelSingleGUISheetParser extends BaseExcelFormSheetParser {
 
 	private static final List<String> SHEET_TYPES = Arrays.asList("FORM", "COMBO", "FIELD", "BUTTON");
 
-	private static final Map<String, Integer> JAVA_TYPES = new HashMap<>();
+	public static final Map<String, Integer> JAVA_TYPES = new HashMap<>();
 	static {
 		JAVA_TYPES.put("LONG", 10);
 		JAVA_TYPES.put("BIGDECIMAL", 12);
@@ -253,6 +255,7 @@ public class ExcelSingleGUISheetParser extends BaseExcelFormSheetParser {
 								error = true;
 							} else {
 								field.setType(JAVA_TYPES.get(value));
+								field.setJavaType(StringUtils.capitalize(value.toLowerCase()));
 								index++;
 							}
 

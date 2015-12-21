@@ -57,11 +57,11 @@ public class SqlDataGridBuilder extends BaseSqlBuilder {
 		output.add(SQL_BLANK_LINE);
 		
 		//Jsp Creation
-		try {
-			SRMSJspGenerator.createJSP(gui);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			SRMSJspGenerator.createJSP(gui);
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		
 	}
 }

@@ -12,6 +12,7 @@ import ma.ericsson.granite.cli.model.Field;
 import ma.ericsson.granite.cli.model.Form;
 import ma.ericsson.granite.cli.model.GUI;
 import ma.ericsson.granite.cli.model.GUIAttribute;
+import ma.ericsson.granite.cli.service.excel.impl.ExcelSingleGUISheetParser;
 import ma.ericsson.granite.cli.util.ParserConstants;
 import ma.ericsson.utils.Utils;
 
@@ -28,12 +29,12 @@ public class SRMSModelGenerator {
 
 	protected static final Log log = LogFactory.getLog(SRMSModelGenerator.class);
 
-	private static final Map<String, String> collumns = new HashMap<>();
+	private static final Map<String, String> columns = new HashMap<>();
 	static {
-		collumns.put("nomSiteInstId", "NOM_SITE_INST_ID");
-		collumns.put("nomSiteHumId", "NOM_SITE_HUM_ID");
-		collumns.put("siteInstId", "SITE_INST_ID");
-		collumns.put("ngoSrmsInstId", "NGO_SRMS_INST_ID");
+		columns.put("nomSiteInstId", "NOM_SITE_INST_ID");
+		columns.put("nomSiteHumId", "NOM_SITE_HUM_ID");
+		columns.put("siteInstId", "SITE_INST_ID");
+		columns.put("ngoSrmsInstId", "NGO_SRMS_INST_ID");
 	}
 
 	// private final static String PKG_NAME = "srms.acquisition.forms.inwi";
@@ -53,7 +54,7 @@ public class SRMSModelGenerator {
 		for (Field field : fields) {
 			if (!field.getGroup().equals("ATTACHEMENT")) {
 				String attrName = field.getName();
-				String attrType = "String";
+				String attrType = field.getJavaType();  // "String";
 				addProperty(javaClass, attrName, attrType, field.isPk(), field.isReadOnly());
 			}
 		}
@@ -78,17 +79,17 @@ public class SRMSModelGenerator {
 
 	private static void addProperty(JavaClassSource javaClass, String field, String type, boolean isPk, boolean isReadOnly) {
 
-		String column = collumns.containsKey(field) ? collumns.get(field) : "TODO";
+		String column = columns.containsKey(field) ? columns.get(field) : field.toUpperCase();
 
 		PropertySource propertySource = javaClass.addProperty(type, field);
 
 		FieldSource fieldSource = propertySource.getField();
 
-		if (collumns.containsKey(field)) {
+		if (columns.containsKey(field)) {
 			if (isPk) {
 				fieldSource.addAnnotation(Id.class);
 			}
-			fieldSource.addAnnotation(Column.class).setLiteralValue("name", "\"" + collumns.get(field) + "\"");
+			fieldSource.addAnnotation(Column.class).setLiteralValue("name", "\"" + columns.get(field) + "\"");
 		} else if (isReadOnly) {
 			fieldSource.addAnnotation(Column.class).setLiteralValue("name", "\"" + column + "\"");
 		} else {

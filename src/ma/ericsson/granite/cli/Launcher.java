@@ -35,7 +35,10 @@ public class Launcher {
 	public static void main(String[] args) {
 
 		// String file = "SRMS_ScheduleAndEffort_v02_formatted.xlsx";
-		String file = "gui.xlsx";
+		// String file = "gui.xlsx";
+//		String file = "Install GE.xlsx";
+		// String file = "OnAir.xlsx";
+		String file = "Observation.xlsx";
 
 		ApplicationContext context = new ClassPathXmlApplicationContext(new String[] { "applicationResources.xml", "applicationContext.xml" });
 
@@ -52,7 +55,7 @@ public class Launcher {
 
 			try {
 //				SRMSConstantsGenerator.createConstants(form);
-//				SRMSJspGenerator.createJSP(form);
+				SRMSJspGenerator.createJSP(form);
 				SRMSModelGenerator.createClassModel(form);
 				SRMSServiceGenerator.createClassService(form);
 			} catch (Exception e) {
@@ -63,7 +66,7 @@ public class Launcher {
 
 			output = builder.build(form);
 
-			PrintWriter writer = new PrintWriter("gui.sql");
+			PrintWriter writer = new PrintWriter("gui_"+form.getName()+".sql");
 
 			for (int i = 0; i < output.size(); i++) {
 				writer.write(output.get(i));

@@ -13,6 +13,7 @@ public class Field {
     private String sic;
     private boolean mandatory;
     private Integer type;
+    private String javaType;
     private Integer formType;
     private boolean pk;
     private boolean visible;
@@ -153,4 +154,12 @@ public class Field {
     public void setHeight(Integer height) {
         this.height = height;
     }
+
+	public String getJavaType() {
+		return javaType;
+	}
+
+	public void setJavaType(String javaType) {
+		this.javaType = javaType;
+	}
 }
